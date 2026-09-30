@@ -14,9 +14,9 @@ export function InterestSignup({
   initialInterest: Interest
 }) {
   return (
-    <section className="text-brand-foreground relative overflow-hidden">
+    <section className="text-brand-foreground relative flex min-h-[85svh] items-center overflow-hidden">
       <BloomFieldBackground />
-      <div className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:py-28">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:py-24">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <Reveal>
             <div className="text-center lg:text-left">
