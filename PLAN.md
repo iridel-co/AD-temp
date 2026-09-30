@@ -694,3 +694,13 @@ Deviations: **`src/app/staff-login/` and `src/app/email-templates/` NOT deleted*
 - /interest: one checkbox (privacy); submit OK (200); thanks page fills >=85svh, scrollWidth == innerWidth at both sizes. DB row: company null, consent_privacy true, consent_updates false, consent_version 2026-10-01b; event.test\* rows deleted, 0 remain.
 - Screenshots: scratchpad/shots2/_-d.png, _-m.png (8 views).
 - Dev server killed by PID, port 3458 free; graphify updated.
+
+## Rounds 3–4 — done (2026-10-01)
+
+Live at https://adrianding.vercel.app/ (commit daa925c). QR code: `assets-src/qr/adrianding-qr.png`.
+
+- Every submission is kept as its own row. Migration `20261001130000` was applied by Chan and verified. The merge query for handover is at the bottom of that file.
+- Fixed the bug where tapping a card opened `/interest` at the footer. The cause was `ScrollTrigger.refresh()` restoring a stale cached scroll value. Back/Forward now restore the scroll position (see `scroll-refresh.tsx`). Verified in emulation (iPhone 13, Pixel 7, desktop); not yet confirmed on a real iPhone.
+- Every CTA is now a single "Get notified" button, each with its page's preset. The home page gets a closing SiteCta band. The `/interest` section is `min-h-[85svh]`, matching the thanks page.
+
+Still open with the client: the real privacy contact email (interim: chanabayabay@gmail.com), confirmation of the 2-year retention period, and an update to the privacy notice when the data is transferred (~Nov).
