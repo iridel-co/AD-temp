@@ -42,10 +42,7 @@ const TILE_ON =
 const STEPS: { title: string; fields: (keyof InterestValues)[] }[] = [
   { title: "Your details", fields: ["fullName", "email"] },
   { title: "Your work", fields: ["designation", "company"] },
-  {
-    title: "Almost done",
-    fields: ["interest", "consentPrivacy", "consentUpdates"],
-  },
+  { title: "Almost done", fields: ["interest", "consentPrivacy"] },
 ]
 
 const SUBMIT_ERROR =
@@ -72,7 +69,7 @@ export function InterestForm({
   } = useForm<InterestValues>({
     resolver: zodResolver(interestSchema),
     mode: "onTouched",
-    defaultValues: { interest: initialInterest, consentUpdates: false },
+    defaultValues: { interest: initialInterest },
   })
 
   const interest = watch("interest")
@@ -245,7 +242,8 @@ export function InterestForm({
               />
               <span className="text-muted-foreground text-sm leading-relaxed">
                 I agree to {DATA_CONTROLLER} collecting and using the details
-                above to follow up on my interest, as described in the{" "}
+                above to notify me when workshops and corporate training open
+                and to follow up on my interest, as described in the{" "}
                 <Link
                   href={PRIVACY_PATH}
                   target="_blank"
@@ -262,18 +260,6 @@ export function InterestForm({
                 {errors.consentPrivacy.message}
               </p>
             )}
-
-            <label className="flex items-start gap-3">
-              <input
-                type="checkbox"
-                className="accent-brand mt-1 size-4"
-                {...register("consentUpdates")}
-              />
-              <span className="text-muted-foreground text-sm leading-relaxed">
-                Also send me occasional updates about new workshop dates and
-                programmes. I can unsubscribe any time.
-              </span>
-            </label>
           </>
         )}
       </div>

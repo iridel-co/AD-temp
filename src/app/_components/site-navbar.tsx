@@ -49,7 +49,6 @@ const LINKS = [
   { href: "/about", label: "About" },
   { href: "/workshops", label: "Workshops" },
   { href: "/corporate-training", label: "Corporate Training" },
-  { href: "/gallery", label: "Gallery" },
 ]
 
 const CTA_LABEL = "Get notified"

@@ -28,11 +28,9 @@ import { cn } from "@/lib/utils"
  * name and a free-text message was not enough to quote against, so those four
  * are now captured explicitly.
  *
- * Prefill (2026-09-19): the corporate carousel's Inquire button hands off a
- * programme two ways — a `?program=<key>` URL (read on mount, deep-link /
- * reload safe) and a `PROGRAM_INQUIRE_EVENT` window event (re-applies a
- * programme even if the URL didn't change, e.g. a second click after the
- * visitor picked something else by hand). Also new: an optional
+ * Prefill (2026-09-19): a `?program=<key>` URL (read on mount, deep-link /
+ * reload safe) preselects a programme. (The `ad:program-inquire` window event
+ * was removed 2026-10-01 — nothing dispatches it now the cards link to /interest.) Also new: an optional
  * "Also interested in" group of selectable tiles (real checkboxes, visually
  * hidden, inside a fieldset — changed from plain checkboxes 2026-09-24), so
  * one inquiry can cover more than one programme.
@@ -53,9 +51,6 @@ import { cn } from "@/lib/utils"
  * window load), via the existing `smoothScrollToElement` helper — and only if
  * the visitor hasn't already started scrolling by hand.
  */
-
-// Must match the constant in _components/program-carousel.tsx — see docs/feedback-passes/PLAN-feedback-2.md.
-const PROGRAM_INQUIRE_EVENT = "ad:program-inquire"
 
 const SPEC_TITLES = CORPORATE_PROGRAMMES.map((s) => s.title) as [
   string,
@@ -194,20 +189,7 @@ export function CorporateInquiryForm() {
   useEffect(() => {
     const key = new URLSearchParams(window.location.search).get("program")
     if (key) applyProgram(key, false)
-    // Only ever read on mount — the event handler below covers later changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // Second entry point: a click on an Inquire button already on this page,
-  // which may not change the URL if the visitor picked the same programme
-  // twice, or is already on this page.
-  useEffect(() => {
-    const onInquire = (e: Event) => {
-      const key = (e as CustomEvent<{ key?: unknown }>).detail?.key
-      if (typeof key === "string") applyProgram(key, true)
-    }
-    window.addEventListener(PROGRAM_INQUIRE_EVENT, onInquire)
-    return () => window.removeEventListener(PROGRAM_INQUIRE_EVENT, onInquire)
+    // Only ever read on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

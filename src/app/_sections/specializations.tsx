@@ -14,26 +14,23 @@ import {
 /**
  * Landing — Coach Adrian's in-house corporate training programmes, framed
  * explicitly as run for companies and their teams (2026-09-24 copy pass).
- * Each is a reveal card: at rest it shows the title and full blurb; hovering
- * or keyboard-focusing a card (desktop, real pointer only) swaps the blurb
- * for "Useful for" + 4 bullets and an Inquire button, and grows the card.
- * Touch devices and screens below `lg` never expand — every card is static
- * at the detail height. Sits on the muted ground between the credibility
- * block and the workshop/corporate fork.
+ * Each card shows its title and blurb under a "Coming soon" glass veil and is
+ * one link to the corporate interest form (see `spec-reveal-cards.tsx`).
+ * Sits on the muted ground between the credibility block and the
+ * workshop/corporate fork.
  *
  * Reads `CORPORATE_PROGRAMMES` — all ten: Adrian's real six, then the four
  * placeholder programmes (pass 5, 2026-09-24, Chan's call; the placeholders
  * are still TODO-confirm-with-Adrian in `lib/specializations.ts`). The About
  * "Core program tracks" figure and the site CTA marquee deliberately stay on
  * `SPECIALIZATIONS` (the real six). Ten rows needed no layout change: the
- * placeholder blurbs/bullets fit the same 11.5rem / 27rem / 28rem heights.
+ * placeholder blurbs fit the same card heights.
  */
 
 const CARDS: SpecCard[] = CORPORATE_PROGRAMMES.map((spec) => ({
   key: spec.key,
   title: spec.title,
   blurb: spec.blurb,
-  usefulFor: spec.usefulFor,
   image: SPECIALIZATION_IMAGES[spec.key],
   imageAlt: SPECIALIZATION_IMAGE_ALTS[spec.key],
   imagePosition: SPECIALIZATION_IMAGE_POSITIONS[spec.key],
@@ -56,16 +53,12 @@ export function LandingSpecializations() {
               Coach Adrian&rsquo;s corporate training programmes, run in-house
               for companies and their teams — at your office or offsite, and
               shaped around your people and goals.
-              <span className="hidden lg:pointer-fine:inline">
-                {" "}
-                Hover one to see who it&rsquo;s for.
-              </span>
             </p>
           </div>
 
           {/* Right — the ten reveal cards. A horizontal snap rail below `lg`
               (six stacked cards ran ~2 phone screens on their own), the
-              vertical expand-on-hover stack from `lg` up. `-mx-6`/`px-6`
+              static vertical stack from `lg` up. `-mx-6`/`px-6`
               lets the rail bleed to the viewport edges while its first card
               still lines up with the section gutter. */}
           <Reveal

@@ -16,13 +16,10 @@ import {
  * page's reveal-card stack. Ten cards from `CORPORATE_PROGRAMMES` — Adrian's
  * six real programmes plus four 2026-09-24 placeholders, shown here (and on
  * the inquiry form) so the long list can be judged; never on the landing
- * page. Hovering (desktop + pointer) a card widens it to show who the
- * programme is for and an Inquire button that jumps to the inquiry form
- * with that programme preselected. On touch or below `lg`, every card is
- * static — title, bullets, Inquire, no expand. Added 2026-09-19; copy
- * rewritten 2026-09-24 to say plainly these are in-house corporate
- * programmes. The landing page's `SpecRevealCards` section is deliberately
- * unchanged.
+ * page. Each card sits under a "Coming soon" glass veil and is one link to
+ * the corporate interest form; no hover expand, no Inquire button. Added
+ * 2026-09-19; copy rewritten 2026-09-24 to say plainly these are in-house
+ * corporate programmes.
  */
 const CARDS: ProgramCard[] = CORPORATE_PROGRAMMES.map((spec) => ({
   key: spec.key,
@@ -50,10 +47,6 @@ export function CorporatePrograms() {
               team or the whole organisation. Each is tailored to your
               people&rsquo;s roles, industry and goals, drawing on twenty years
               on the training circuit.
-              <span className="hidden lg:pointer-fine:inline">
-                {" "}
-                Hover a programme to see who it&rsquo;s for.
-              </span>
             </p>
           </div>
         }

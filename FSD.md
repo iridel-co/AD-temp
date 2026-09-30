@@ -46,7 +46,7 @@ The demo shows every form and post-submit page as frontend-only UI. Nothing is s
 
 - Online payment gateways (card, GCash/Maya API, PayMongo, etc.). Payment is manual (§11.1).
 - Public user accounts. Only staff sign in (`PRD.md` → Auth).
-- **Gallery**, entirely: no CMS collection, no new work. Removed from this scope for budget (decided 2026-09-30). The gallery code stays in the demo so a later scope update can pick it up.
+- **Gallery**, entirely: no CMS collection, no new work. Removed from this scope for budget (decided 2026-09-30). The gallery code was removed from the demo on 2026-10-01 (out of scope).
 - Newsletter / mailing list. Nothing in the demo or docs asks for one (§12).
 - Official receipt (BIR) generation. It is issued outside the system; the spec only records it (§4.6, [OPEN-6]).
 
@@ -935,7 +935,7 @@ Under RA 10173 each field needs a declared purpose, the privacy notice must list
 | 2026-09-30 | **Reference ID:** `AD-<COURSE>-<####>` (course code on the workshop record + zero-padded per-course sequence, race-safe). The registrant puts it in the transfer note                                                      | Chan                                                                                                          |
 | 2026-09-30 | **CRM:** the team's decision. The spec stays tool-agnostic                                                                                                                                                                 | Chan                                                                                                          |
 | 2026-09-30 | **Ticket:** the reference ID is the ticket, nothing more. No QR codes, door check-in or ticketing service: the client's quote doesn't include one (out of scope, §12)                                                      | Chan                                                                                                          |
-| 2026-09-30 | **Gallery out of scope** for budget. Its code stays in the demo for a future scope update                                                                                                                                  | Chan                                                                                                          |
+| 2026-09-30 | **Gallery out of scope** for budget. Its code was removed from the demo 2026-10-01                                                                                                                                         | Chan                                                                                                          |
 | 2026-09-30 | **Phase 2 scope:** everything in §1 "In scope"                                                                                                                                                                             | Chan                                                                                                          |
 | (existing) | Staff-only Google login; no public accounts                                                                                                                                                                                | `PRD.md` → Auth                                                                                               |
 
@@ -1033,7 +1033,7 @@ Candidates, not ranked:
 - Multi-seat or group booking in one registration. Groups of 10+ go to a corporate inquiry.
 - Newsletter / mailing list and marketing automation.
 - Early-bird or promo codes (depends on [OPEN-20]).
-- Gallery (CMS collection and any feature work). Out for budget; the code stays in the demo for a future scope update.
+- Gallery (CMS collection and any feature work). Out for budget; the code was removed from the demo 2026-10-01.
 - `?tag=` URL sync on `/workshops` (`docs/feedback-passes/PLAN-feedback-2.md` → Out of scope).
 - Per-photo OG focal point field (`README.md` → Share images → Known limits).
 - Tickets beyond the reference ID: QR codes, door check-in app, ticketing service. Not in the client's quote (decided 2026-09-30).
@@ -1060,4 +1060,4 @@ Candidates, not ranked:
 | Payment / policy copy                | `lib/workshop-faq.ts`, `app/workshops/[slug]/registered/_sections/payment.tsx`                                                                                                       |
 | Corporate programmes (keys)          | `lib/specializations.ts` (`CORPORATE_PROGRAMMES`)                                                                                                                                    |
 | OG cards (derived)                   | `app/workshops/[slug]/opengraph-image.tsx`, `app/opengraph-image.tsx`, `lib/og-card.tsx`, `lib/og-photo.ts`, `lib/og-fonts.ts`, `lib/og-jpeg.ts`, `scripts/check-og.mjs` (repo root) |
-| Other CMS content contracts          | `lib/{testimonials,companies,timeline,certifications}.ts` (`lib/gallery.ts` stays as static demo data; out of scope)                                                                 |
+| Other CMS content contracts          | `lib/{testimonials,companies,timeline,certifications}.ts` (gallery removed 2026-10-01; out of scope)                                                                                 |

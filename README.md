@@ -62,18 +62,17 @@ decisions) and the dev team (architecture, gotchas, setup) building Phase 2.
 
 ## Status at a glance
 
-| Route                                  | Status        | Real vs. mocked                                                                                                                                                                               |
-| -------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/`                                    | Built         | Real copy/layout; stats, testimonials, some company logos are placeholder (see [Phase 2 map](#phase-2-map))                                                                                   |
-| `/about`                               | Built         | Real copy/layout; timeline milestones and industry-count stat pending client confirm                                                                                                          |
-| `/workshops`                           | Built         | Real UI (filter, calendar); catalogue is static mock data                                                                                                                                     |
-| `/workshops/[slug]`                    | Built         | Real UI incl. registration form, FAQ, sticky register bar; prices, curriculum framing, testimonials are placeholders pending sign-off. Has its own `opengraph-image.tsx`                      |
-| `/workshops/[slug]/registered`         | Built         | Confirmation UI only — form doesn't submit; payment details (bank/GCash) are placeholders. `noindex`                                                                                          |
-| `/corporate-training`                  | Built         | Real UI incl. programme carousel (10 programmes, 4 are placeholders to judge a longer list) and inquiry form                                                                                  |
-| `/corporate-training/inquiry-received` | Built         | Confirmation UI only — form doesn't submit. `noindex`                                                                                                                                         |
-| `/gallery` + `/gallery/[slug]`         | Built         | Real UI; events, photos, and Adrian's "reflections" copy are all representative placeholders. Client asked to defer further gallery work to a later phase — page stays live in the demo as-is |
-| `/staff-login`                         | UI shell only | "Sign in with Google" button is inert, no auth provider                                                                                                                                       |
-| `/email-templates`                     | UI shell only | Static preview of 3 email templates (copy + layout), no send wiring, `noindex`                                                                                                                |
+| Route                                  | Status        | Real vs. mocked                                                                                                                                                          |
+| -------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/`                                    | Built         | Real copy/layout; stats, testimonials, some company logos are placeholder (see [Phase 2 map](#phase-2-map))                                                              |
+| `/about`                               | Built         | Real copy/layout; timeline milestones and industry-count stat pending client confirm                                                                                     |
+| `/workshops`                           | Built         | Real UI (filter, calendar); catalogue is static mock data                                                                                                                |
+| `/workshops/[slug]`                    | Built         | Real UI incl. registration form, FAQ, sticky register bar; prices, curriculum framing, testimonials are placeholders pending sign-off. Has its own `opengraph-image.tsx` |
+| `/workshops/[slug]/registered`         | Built         | Confirmation UI only — form doesn't submit; payment details (bank/GCash) are placeholders. `noindex`                                                                     |
+| `/corporate-training`                  | Built         | Real UI incl. programme carousel (10 programmes, 4 are placeholders to judge a longer list) and inquiry form                                                             |
+| `/corporate-training/inquiry-received` | Built         | Confirmation UI only — form doesn't submit. `noindex`                                                                                                                    |
+| `/staff-login`                         | UI shell only | "Sign in with Google" button is inert, no auth provider                                                                                                                  |
+| `/email-templates`                     | UI shell only | Static preview of 3 email templates (copy + layout), no send wiring, `noindex`                                                                                           |
 
 `npm run validate` (typecheck + lint + format check) is the pre-delivery gate — see
 [Quality gates](#quality-gates).
@@ -90,7 +89,6 @@ decisions) and the dev team (architecture, gotchas, setup) building Phase 2.
 | Staff login                                    | `src/app/staff-login/page.tsx`                                                                                             | Auth (Google, staff-only)                                      | No provider, no session, no protected routes yet. Confirm with Adrian what staff actually need to do here before building real auth — the "why" isn't settled, only the login screen is. Its intended role (marking registrants PAID, staff roles) is specified in [`FSD.md`](FSD.md) §4.2, §4.12 and §8.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | Email templates page                           | `src/app/email-templates/_sections/templates.tsx`                                                                          | Resend transactional email (decided 2026-09-30)                | 3 templates previewed: workshop registration confirmation, payment confirmation (triggered by staff marking a registrant PAID in the CRM), corporate inquiry acknowledgment. This page is copy/layout only — no send-trigger wiring. It is separate from the owner "new inquiry" notification email required by the lead-capture contract above. Full email catalogue incl. proposed internal/reminder emails: [`FSD.md`](FSD.md) §7. Note these are static preview data, not send-ready React Email components.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Testimonials                                   | `src/lib/testimonials.ts`                                                                                                  | CMS content, sourced from `Coach_Adrian_Ding_Website_2025.pdf` | Every quote is a placeholder; no headshots supplied. Don't paraphrase when swapping in real ones — use them verbatim.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| Gallery                                        | `src/lib/gallery.ts`                                                                                                       | CMS                                                            | Static array is the schema to match, incl. `relatedWorkshop` relation. All events/photos/reflections copy are representative stand-ins. Deferred by the client — not a blocker, just not final content.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | Companies logos                                | `src/lib/companies.ts`                                                                                                     | CMS or static asset list                                       | 44/91 roster companies have logo artwork (`co-*` files in `public/images/logos/`); the other 47 render as name chips by design, so gaps stay visible. Priority categories with zero artwork: Finance, Real Estate, Hotels, Food & Retail, SMEs.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | Timeline                                       | `src/lib/timeline.ts`                                                                                                      | CMS                                                            | Founding year and milestone wording need client confirmation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | Specializations                                | `src/lib/specializations.ts`                                                                                               | CMS                                                            | Programme copy and `usefulFor` bullets need Adrian's sign-off; several photos are `placeholderImg()` Unsplash stand-ins pending real photography.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -171,9 +169,8 @@ specific to this codebase — not a generic backend checklist.
 **CMS** (also FSD OPEN-2 / OPEN-14; workshop fields incl. the new `courseCode` are in FSD §5.1)
 
 - Which CMS? The data contract to match is already written: `src/lib/workshops.ts`,
-  `gallery.ts`, `companies.ts`, `testimonials.ts`, `timeline.ts`, `specializations.ts`,
-  `certifications.ts` — each is the shape a schema should replicate, including relations like
-  `GalleryEvent.relatedWorkshop`.
+  `companies.ts`, `testimonials.ts`, `timeline.ts`, `specializations.ts`,
+  `certifications.ts` — each is the shape a schema should replicate, including relations.
 - Who edits it — just Adrian, or does staff (via `/staff-login`) get a role too? The staff
   login screen currently has no defined purpose beyond "CRM/CMS access" — what do staff
   actually do there day to day?
@@ -226,7 +223,7 @@ Still open (FSD OPEN-16, OPEN-18, OPEN-21):
 
 - the purpose of collecting salary range;
 - retention for proof-of-payment images;
-- consent from people shown in testimonial and gallery photos.
+- consent from people shown in testimonial photos.
 
 ---
 
@@ -357,7 +354,6 @@ src/
     _lib/                       gsap.ts, handoff.ts, hooks (see below)
     about/ workshops/ workshops/[slug]/ workshops/[slug]/registered/
     corporate-training/ corporate-training/inquiry-received/
-    gallery/ gallery/[slug]/
     staff-login/ email-templates/
       page.tsx                  route metadata + composition
       _sections/*.tsx            that route's sections
@@ -366,7 +362,7 @@ src/
     common/                    shared marketing/dashboard components (template — don't edit)
     ui/                        primitives, shadcn-style (template — don't edit)
   lib/                         mock content modules (see below)
-public/images/                 gallery/, hero/, icons/, logos/, mascot/ — subfoldered, not flat
+public/images/                 gallery/ (workshop photos), hero/, icons/, logos/, mascot/ — subfoldered, not flat
 ```
 
 ### Routes
@@ -387,13 +383,12 @@ route. Every route folder follows the same convention: `page.tsx` is imports + c
   | --------------------------------------------------------- | ------------------------------------------------------------------------------ |
   | `workshops.ts`                                            | workshop cards + detail pages, tags                                            |
   | `workshop-faq.ts`                                         | registration FAQ                                                               |
-  | `gallery.ts`                                              | past-event cards + detail pages                                                |
   | `testimonials.ts`                                         | testimonial quotes across pages                                                |
   | `timeline.ts`                                             | About page journey/milestones                                                  |
   | `companies.ts`                                            | "companies served" logo marquee                                                |
   | `specializations.ts`                                      | corporate programme cards                                                      |
   | `certifications.ts`                                       | About page accrediting-body list                                               |
-  | `images.ts`, `utils.ts`, `gallery-blur.ts`                | helpers, not content                                                           |
+  | `images.ts`, `utils.ts`                                   | helpers, not content                                                           |
   | `og-jpeg.ts`, `og-photo.ts`, `og-fonts.ts`, `og-card.tsx` | share-image card pipeline — see [Share images](#share-images-open-graph-cards) |
 
   These `src/lib/*.ts` files are the seams Phase 2 replaces with real CMS data — see the
@@ -442,7 +437,7 @@ check this specifically on any button variant you touch.
 
 #### Motion
 
-- Mount-time reveals (e.g. the gallery wall tiles) are CSS keyframes, not JS, so they
+- Mount-time reveals (e.g. hero copy) are CSS keyframes, not JS, so they
   paint immediately instead of sitting blank until a motion library hydrates.
 - Scroll- and interaction-driven motion is GSAP-first (see below); `framer-motion` is
   used more broadly than just the hero — it backs `countdown.tsx`,
@@ -453,7 +448,7 @@ check this specifically on any button variant you touch.
 
 #### Hover states
 
-Gallery/photo tile hover should only scale the tile up. Never dim or white-out sibling
+Photo tile hover should only scale the tile up. Never dim or white-out sibling
 tiles on hover — that reads as a bug, not an effect.
 
 ### Animation architecture (GSAP)
@@ -563,7 +558,7 @@ scrollY 5300 instead of 4298 — a full viewport late.
 
 `public/images/` is subfoldered (`gallery/`, `hero/`, `icons/`, `logos/`, `mascot/`) —
 this diverges from the base template's flat-file rule because of the volume of company
-logos and per-event gallery photos. Company logo files are named `co-<slug>.<ext>`.
+logos and workshop photos. Company logo files are named `co-<slug>.<ext>`.
 
 `src/app/og-assets/` holds `Prata-Regular.ttf` and `RedHatDisplay-600.ttf` — TTF, not
 the site's `.woff2`, for the reason in [Gotchas](#gotchas). `ad-hero-portrait.png` (the

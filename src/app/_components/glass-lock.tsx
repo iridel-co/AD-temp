@@ -12,10 +12,11 @@ type GlassLockProps = {
   body?: string
   ctaLabel?: string
   /**
-   * panel = heading + body + CTA; chip = small "Coming soon" pill, no CTA;
-   * card = the whole box is one link to `href`: frosted veil, centred
-   * "Coming soon" pill, content blurred hard and inert underneath. The wrapper
-   * has no `relative`, so pass `absolute inset-0 ...` (or your own position).
+   * panel = heading + body + CTA; chip = lock + "Coming soon", no CTA;
+   * card = the whole box is one link to `href`: dark frosted veil, centred
+   * lock + "Coming soon", content blurred hard and inert underneath. The
+   * wrapper has no `relative`, so pass `absolute inset-0 ...` (or your own
+   * position).
    */
   variant?: "panel" | "chip" | "card"
   /** card variant: link target (normally interestHref(...)). */
@@ -26,6 +27,24 @@ type GlassLockProps = {
   strong?: boolean
   /** On the outer wrapper (width, radius, margins). */
   className?: string
+}
+
+/** Lock in a small frosted circle, then a large tracked "Coming soon". */
+function LockBadge({ hoverGroup = false }: { hoverGroup?: boolean }) {
+  return (
+    <>
+      <span
+        className={`relative flex size-14 items-center justify-center rounded-full border border-white/40 bg-white/15 text-white shadow-[inset_0_1px_0_0_rgb(255_255_255/0.5),0_12px_30px_-12px_rgb(0_0_0/0.6)] backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/40 before:via-white/5 before:to-transparent motion-reduce:transition-none sm:size-16 ${
+          hoverGroup ? "group-hover/glass:bg-white/30" : ""
+        }`}
+      >
+        <Lock className="relative size-6 sm:size-7" aria-hidden="true" />
+      </span>
+      <span className="text-lg font-semibold tracking-[0.18em] text-white uppercase drop-shadow-[0_1px_8px_rgb(0_0_0/0.5)] sm:text-xl">
+        Coming soon
+      </span>
+    </>
+  )
 }
 
 /**
@@ -60,12 +79,9 @@ export function GlassLock({
         <Link
           href={href ?? interestHref(interest)}
           aria-label={label}
-          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex items-center justify-center rounded-[inherit] bg-white/15 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.4),inset_0_1px_0_0_rgb(255_255_255/0.7)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset"
+          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-[inherit] bg-black/40 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset"
         >
-          <span className="text-foreground relative inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/45 px-4 py-2 text-xs font-semibold tracking-[0.14em] uppercase shadow-[inset_0_1px_0_0_rgb(255_255_255/0.85),0_12px_30px_-12px_rgb(0_0_0/0.4)] backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-300 group-hover/glass:bg-white/65 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/60 before:via-white/10 before:to-transparent motion-reduce:transition-none">
-            <Lock className="relative size-3.5" />
-            <span className="relative">Coming soon</span>
-          </span>
+          <LockBadge hoverGroup />
         </Link>
       </div>
     )
@@ -83,26 +99,20 @@ export function GlassLock({
         {children}
       </div>
 
-      <div className="bg-background/20 absolute inset-0 z-10 flex items-center justify-center rounded-[inherit] p-4">
+      <div className="absolute inset-0 z-10 flex items-center justify-center rounded-[inherit] bg-black/35 p-4 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-[2px] backdrop-saturate-150">
         {variant === "chip" ? (
-          <span className="text-foreground relative inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/45 px-4 py-2 text-xs font-semibold tracking-[0.14em] uppercase shadow-[inset_0_1px_0_0_rgb(255_255_255/0.85),0_12px_30px_-12px_rgb(0_0_0/0.4)] backdrop-blur-2xl backdrop-saturate-150 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/60 before:via-white/10 before:to-transparent">
-            <Lock className="relative size-3.5" />
-            <span className="relative">Coming soon</span>
-          </span>
+          <div className="flex flex-col items-center gap-3">
+            <LockBadge />
+          </div>
         ) : (
-          <div className="text-foreground relative w-full max-w-sm rounded-2xl border border-white/60 bg-white/45 p-6 text-center shadow-[inset_0_1px_0_0_rgb(255_255_255/0.85),inset_0_-1px_0_0_rgb(255_255_255/0.3),0_24px_60px_-24px_rgb(0_0_0/0.4)] backdrop-blur-2xl backdrop-saturate-150 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/60 before:via-white/10 before:to-transparent sm:p-8">
-            <div className="relative">
-              <p className="text-foreground/70 inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.14em] uppercase">
-                <Lock className="size-3.5" />
-                Coming soon
-              </p>
-              <p className="mt-3 font-serif text-2xl leading-tight">
+          <div className="relative w-full max-w-sm rounded-2xl border border-white/25 bg-black/45 p-6 text-center text-white shadow-[inset_0_1px_0_0_rgb(255_255_255/0.4),0_24px_60px_-24px_rgb(0_0_0/0.6)] backdrop-blur-2xl backdrop-saturate-150 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/20 before:via-white/5 before:to-transparent sm:p-8">
+            <div className="relative flex flex-col items-center gap-3">
+              <LockBadge />
+              <p className="mt-2 font-serif text-2xl leading-tight">
                 {heading}
               </p>
-              <p className="text-foreground/75 mt-3 text-sm leading-relaxed">
-                {body}
-              </p>
-              <Button asChild variant="brand" size="lg" className="mt-6">
+              <p className="text-sm leading-relaxed text-white/85">{body}</p>
+              <Button asChild variant="brand" size="lg" className="mt-3">
                 <Link href={interestHref(interest)}>
                   {ctaLabel}
                   <ArrowRight className="size-4" />

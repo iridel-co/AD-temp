@@ -17,7 +17,6 @@ const NAV = [
   { href: "/workshops", label: "Workshops" },
   { href: "/corporate-training", label: "Corporate Training" },
   { href: "/about", label: "About" },
-  { href: "/gallery", label: "Gallery" },
 ]
 
 // Kept in step with the hero's own SOCIALS (hero-editorial.tsx) — same five

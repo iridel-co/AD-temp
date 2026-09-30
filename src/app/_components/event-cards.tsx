@@ -95,7 +95,7 @@ const GRID_COL = "contents lg:flex lg:flex-1 lg:flex-col lg:gap-8"
 
 // Grid-only hover: the whole card scales up in place (transform, not a real
 // layout resize) and lifts above its neighbours — the same "grows on
-// hover" interaction the gallery wall uses on its photo tiles. `isolate` +
+// hover" interaction. `isolate` +
 // `hover:z-10` keeps the scaled-up card painting over its siblings instead
 // of sinking behind the next one in DOM order.
 //

@@ -6,8 +6,8 @@ import { useIsTouch } from "@/app/_lib/use-is-touch"
 import { cn } from "@/lib/utils"
 
 /**
- * Gives a block of heading/body copy the same subtle cursor-drift as the
- * gallery wall's photos and reflection text — shared so every page opener
+ * Gives a block of heading/body copy the same subtle cursor-drift used on
+ * page-opener copy — shared so every page opener
  * that wants it doesn't re-derive the spacer/overlay plumbing by hand.
  *
  * `Floating`'s children are absolutely positioned, so the drifting copy

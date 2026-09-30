@@ -26,17 +26,17 @@ export function PrivacyNotice() {
           <h2 className="font-serif text-2xl">2. What we collect</h2>
           <p className="text-muted-foreground leading-relaxed">
             Your full name, email, designation and company (if you give one);
-            what you are interested in; whether you want updates; the page you
-            came from; your browser&apos;s user-agent; and timestamps.
+            what you are interested in; the page you came from; your
+            browser&apos;s user-agent; and timestamps.
           </p>
         </div>
 
         <div className="space-y-3">
           <h2 className="font-serif text-2xl">3. Why</h2>
           <p className="text-muted-foreground leading-relaxed">
-            To follow up on your interest from the event and our website. If you
-            ticked the box, also to send occasional updates. Nothing else. There
-            is no automated decision-making.
+            To notify you when workshops or corporate training open, and to
+            follow up on your interest from the event and our website. Nothing
+            else. There is no automated decision-making.
           </p>
         </div>
 

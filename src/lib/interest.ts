@@ -21,7 +21,7 @@ export const INTEREST_API = "/api/interest"
 export const PRIVACY_PATH = "/privacy"
 
 /** Bump this string whenever the privacy notice or the consent wording changes. */
-export const CONSENT_VERSION = "2026-10-01"
+export const CONSENT_VERSION = "2026-10-01b"
 
 /** Legal entity named in the consent text and on the privacy notice. */
 export const DATA_CONTROLLER = "Maximum Impact Training Development"
@@ -64,7 +64,6 @@ export const interestSchema = z.object({
   consentPrivacy: z.literal(true, {
     message: "You need to agree to continue.",
   }),
-  consentUpdates: z.boolean(),
 })
 export type InterestValues = z.infer<typeof interestSchema>
 
