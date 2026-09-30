@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Generated knowledge graph (graphify)
+graphify-out/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Cache
+.cache/
+*.tsbuildinfo
+
+# Generated files
+next-env.d.ts
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
