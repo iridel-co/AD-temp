@@ -1,4 +1,5 @@
 import { CalendarDays, Check, MapPin, Tag } from "lucide-react"
+import { GlassLock } from "@/app/_components/glass-lock"
 import { Countdown } from "@/app/_components/countdown"
 import { PrimerPlayer } from "@/app/_components/primer-player"
 import { TrustLogos } from "@/app/_components/trust-logos"
@@ -39,53 +40,66 @@ export function WorkshopOverview({ workshop }: { workshop: Workshop }) {
             ))}
           </ul>
 
-          <dl className="border-border/60 mt-9 flex flex-col gap-6 border-t pt-8">
-            <Meta icon={CalendarDays} label="When" value={workshop.schedule} />
-            <Meta
-              icon={MapPin}
-              label="Where"
-              value={`${workshop.venue}, ${workshop.city}`}
-            />
-            <Meta icon={Tag} label="Investment" value={workshop.price} />
-          </dl>
+          <GlassLock variant="chip" className="border-border/60 mt-9 border-t">
+            <dl className="flex flex-col gap-6 pt-8">
+              <Meta
+                icon={CalendarDays}
+                label="When"
+                value={workshop.schedule}
+              />
+              <Meta
+                icon={MapPin}
+                label="Where"
+                value={`${workshop.venue}, ${workshop.city}`}
+              />
+              <Meta icon={Tag} label="Investment" value={workshop.price} />
+            </dl>
+          </GlassLock>
         </div>
 
         {isOpen && (
-          <aside className="bg-muted/40 w-full shrink-0 rounded-lg p-6 lg:max-w-xs">
-            <p className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
-              Starts in
-            </p>
-            <div className="mt-3">
-              <Countdown target={workshop.start} />
-            </div>
-
-            {workshop.seatsLeft > 0 && (
-              <p
-                className={`mt-6 text-sm font-medium ${
-                  nearlyFull ? "text-brand" : "text-foreground/80"
-                }`}
-              >
-                {workshop.seatsLeft} of {workshop.seatsTotal} seats left
-                {nearlyFull ? " — this date is filling up" : ""}
+          <GlassLock
+            interest="workshops"
+            heading="Dates coming soon"
+            body="Be first to hear when seats open."
+            className="w-full shrink-0 rounded-lg lg:max-w-xs"
+          >
+            <aside className="bg-muted/40 w-full rounded-lg p-6">
+              <p className="text-muted-foreground text-xs tracking-[0.14em] uppercase">
+                Starts in
               </p>
-            )}
+              <div className="mt-3">
+                <Countdown target={workshop.start} />
+              </div>
 
-            <RegistrationDialog
-              slug={workshop.slug}
-              workshopTitle={workshop.title}
-              schedule={workshop.schedule}
-              venue={`${workshop.venue}, ${workshop.city}`}
-            >
-              <Button variant="brand" size="lg" className="mt-5 w-full">
-                Reserve your seat
-              </Button>
-            </RegistrationDialog>
+              {workshop.seatsLeft > 0 && (
+                <p
+                  className={`mt-6 text-sm font-medium ${
+                    nearlyFull ? "text-brand" : "text-foreground/80"
+                  }`}
+                >
+                  {workshop.seatsLeft} of {workshop.seatsTotal} seats left
+                  {nearlyFull ? " — this date is filling up" : ""}
+                </p>
+              )}
 
-            <p className="text-muted-foreground mt-4 text-xs leading-relaxed">
-              No payment on this page. Register first — we email you the payment
-              details and hold your seat for 48 hours.
-            </p>
-          </aside>
+              <RegistrationDialog
+                slug={workshop.slug}
+                workshopTitle={workshop.title}
+                schedule={workshop.schedule}
+                venue={`${workshop.venue}, ${workshop.city}`}
+              >
+                <Button variant="brand" size="lg" className="mt-5 w-full">
+                  Reserve your seat
+                </Button>
+              </RegistrationDialog>
+
+              <p className="text-muted-foreground mt-4 text-xs leading-relaxed">
+                No payment on this page. Register first — we email you the
+                payment details and hold your seat for 48 hours.
+              </p>
+            </aside>
+          </GlassLock>
         )}
       </div>
 

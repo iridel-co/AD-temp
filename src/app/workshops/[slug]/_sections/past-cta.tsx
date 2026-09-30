@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react"
+import { ArrowRight, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Reveal } from "@/app/_components/reveal"
 import { NEXT_WORKSHOP, type Workshop } from "@/lib/workshops"
@@ -41,10 +41,6 @@ export function PastCta({ workshop }: { workshop: Workshop }) {
                 {next.summary}
               </p>
               <ul className="text-muted-foreground mt-5 space-y-2 text-sm">
-                <li className="flex items-center gap-2.5">
-                  <CalendarDays className="text-brand size-4 shrink-0" />
-                  {next.schedule}
-                </li>
                 <li className="flex items-center gap-2.5">
                   <MapPin className="text-brand size-4 shrink-0" />
                   {next.venue}, {next.city}

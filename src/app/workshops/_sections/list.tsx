@@ -1,3 +1,4 @@
+import { GlassLock } from "@/app/_components/glass-lock"
 import { WorkshopsCalendar } from "@/app/_components/workshops-calendar"
 import { WorkshopTagFilter } from "@/app/_components/workshop-tag-filter"
 import { OPEN_WORKSHOPS } from "@/lib/workshops"
@@ -22,7 +23,14 @@ export function WorkshopsList() {
   return (
     <>
       <section className="mx-auto max-w-7xl px-6 pt-8 pb-16 sm:px-8 lg:pt-10 lg:pb-20">
-        <WorkshopsCalendar workshops={OPEN_WORKSHOPS} className="w-full" />
+        <GlassLock
+          interest="workshops"
+          heading="Calendar coming soon"
+          body="Public workshop dates are being finalised. Join the list to get them first."
+          className="w-full"
+        >
+          <WorkshopsCalendar workshops={OPEN_WORKSHOPS} className="w-full" />
+        </GlassLock>
       </section>
 
       <section className="pb-20 lg:pb-32">

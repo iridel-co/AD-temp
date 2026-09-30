@@ -1,11 +1,13 @@
 import { Reveal } from "@/app/_components/reveal"
 import { BloomFieldBackground } from "@/app/_components/bloom-field-background"
+import { GlassLock } from "@/app/_components/glass-lock"
 import { CorporateInquiryForm } from "./inquiry-form"
 
 /**
  * Corporate Training — closing CTA. Full-bleed brand red, split like
  * <SiteCta>: heading + supporting copy on the left, the inquiry form itself
- * (not a modal) as a floating white card on the right. The left column is
+ * (not a modal) as a floating white card on the right, currently behind a
+ * <GlassLock> (coming soon) that routes to the early-access list. The left column is
  * vertically centered against the form's height. Card floats on the red
  * ground for contrast — see `inquiry-form.tsx` for the card treatment.
  */
@@ -24,13 +26,21 @@ export function CorporateInquiryCta() {
                 Ready to build a program for your team?
               </h2>
               <p className="text-brand-foreground/80 mx-auto mt-6 max-w-md text-lg leading-relaxed lg:mx-0 lg:text-xl">
-                A few quick questions about your team and what you need. We
-                &rsquo;ll reply within 2 business days with a proposal.
+                Online inquiries open soon. Join the early-access list and
+                we&rsquo;ll reach out to build your programme.
               </p>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <CorporateInquiryForm />
+            <GlassLock
+              interest="corporate"
+              heading="Corporate inquiries open soon"
+              body="Join the early-access list and Adrian's team will reach out to scope your programme."
+              ctaLabel="Register your interest"
+              className="rounded-xl"
+            >
+              <CorporateInquiryForm />
+            </GlassLock>
           </Reveal>
         </div>
       </div>

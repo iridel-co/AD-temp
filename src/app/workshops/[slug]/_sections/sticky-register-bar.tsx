@@ -1,14 +1,16 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { CalendarDays } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { interestHref } from "@/lib/interest"
 import type { Workshop } from "@/lib/workshops"
-import { RegistrationDialog } from "./registration-dialog"
 
 /**
- * Bottom-fixed registration bar — the conversion device on this page, and the
- * only CTA that is always reachable on a phone.
+ * Bottom-fixed early-access bar — the conversion device on this page, and the
+ * only CTA that is always reachable on a phone. Registration is not open yet,
+ * so it links to the interest form instead of the registration dialog.
  *
  * It appears once the visitor has scrolled past roughly the first screen, so it
  * never competes with the hero's own register button. A scroll threshold rather
@@ -49,11 +51,6 @@ export function StickyRegisterBar({ workshop }: { workshop: Workshop }) {
     }
   }, [])
 
-  const soldOut = workshop.seatsLeft <= 0
-  const seatsLine = soldOut
-    ? "Fully booked — join the waitlist"
-    : `${workshop.seatsLeft} of ${workshop.seatsTotal} seats left`
-
   return (
     <div
       aria-hidden={!shown}
@@ -68,28 +65,18 @@ export function StickyRegisterBar({ workshop }: { workshop: Workshop }) {
           </p>
           <p className="text-muted-foreground mt-0.5 flex items-center gap-1.5 truncate text-xs">
             <CalendarDays className="size-3.5 shrink-0" />
-            {workshop.schedule}
+            Dates &amp; pricing coming soon
           </p>
         </div>
 
-        <p
-          className={`flex-1 text-sm sm:flex-none sm:text-right ${
-            soldOut ? "text-muted-foreground" : "text-brand font-medium"
-          }`}
-        >
-          {seatsLine}
-        </p>
-
-        <RegistrationDialog
-          slug={workshop.slug}
-          workshopTitle={workshop.title}
-          schedule={workshop.schedule}
-          venue={`${workshop.venue}, ${workshop.city}`}
-        >
-          <Button variant="brand" size="lg" tabIndex={shown ? undefined : -1}>
-            {soldOut ? "Join waitlist" : "Register"}
-          </Button>
-        </RegistrationDialog>
+        <Button asChild variant="brand" size="lg" className="ml-auto">
+          <Link
+            href={interestHref("workshops")}
+            tabIndex={shown ? undefined : -1}
+          >
+            Get early access
+          </Link>
+        </Button>
       </div>
     </div>
   )

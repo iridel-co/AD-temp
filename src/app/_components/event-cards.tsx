@@ -120,15 +120,6 @@ const GRID_COL = "contents lg:flex lg:flex-1 lg:flex-col lg:gap-8"
 const GRID_HOVER =
   "isolate will-change-transform shadow-2xl shadow-black/0 transition-[scale,box-shadow] duration-600 ease-out hover:duration-700 hover:ease-[cubic-bezier(0.16,1,0.3,1)] hover:z-10 hover:scale-[1.035] hover:shadow-black/40"
 
-function shortDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-PH", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "Asia/Manila",
-  })
-}
-
 function ScrollArrows({
   edges,
   onNudge,
@@ -310,7 +301,7 @@ export function EventCards({
 
         <div className="relative flex h-full w-full flex-col justify-end gap-3 px-6 py-8 text-left text-white lg:px-8">
           <p className="text-xs font-semibold tracking-[0.22em] text-white/75 uppercase">
-            {shortDate(w.start)}
+            Dates coming soon
           </p>
           <h3 className="text-[1.75rem] leading-[1.08] font-extrabold tracking-[-0.01em] text-balance lg:text-[2.125rem]">
             {w.title}
@@ -338,7 +329,9 @@ export function EventCards({
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Ticket className="size-4 shrink-0" />
-                    <span className="font-semibold text-white">{w.price}</span>
+                    <span className="font-semibold text-white">
+                      Pricing soon
+                    </span>
                   </div>
                 </dl>
                 {/* Register carries its own hover animation, separate
@@ -353,7 +346,7 @@ export function EventCards({
                     that edge. Translate is safe since it only needs
                     headroom above. */}
                 <span className="group/reg text-brand-foreground bg-brand before:bg-background hover:text-foreground relative isolate inline-flex shrink-0 items-center gap-2 overflow-hidden rounded-full px-5 py-2.5 text-sm font-semibold shadow-lg shadow-black/25 transition-[color,transform,box-shadow] duration-300 before:absolute before:inset-0 before:-z-10 before:origin-left before:scale-x-0 before:transition-transform before:duration-300 before:content-[''] hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/40 hover:before:scale-x-100">
-                  Register
+                  Learn more
                   <ArrowRight className="size-4 transition-transform duration-300 group-hover/reg:translate-x-1" />
                 </span>
               </div>
