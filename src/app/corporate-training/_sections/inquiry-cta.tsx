@@ -36,7 +36,7 @@ export function CorporateInquiryCta() {
               interest="corporate"
               heading="Corporate inquiries open soon"
               body="Join the early-access list and Adrian's team will reach out to scope your programme."
-              ctaLabel="Register your interest"
+              ctaLabel="Get notified"
               className="rounded-xl"
             >
               <CorporateInquiryForm />

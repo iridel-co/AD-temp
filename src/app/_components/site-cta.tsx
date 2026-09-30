@@ -12,12 +12,9 @@ import { BloomFieldBackground } from "./bloom-field-background"
 type SiteCtaProps = {
   heading?: string
   subtext?: string
-  /** Primary button — defaults to the workshop-forward copy used
-   *  everywhere else this section appears. */
+  /** The one button: "Get notified", pointed at the interest form. */
   primaryLabel?: string
   primaryHref?: string
-  secondaryLabel?: string
-  secondaryHref?: string
 }
 
 // Short marquee labels for the six focus areas — the full SPECIALIZATIONS
@@ -148,10 +145,8 @@ function FocusAreaMarquee() {
 export function SiteCta({
   heading = "Ready to build a winning culture?",
   subtext = "Start with a workshop, or bring Adrian in to train your whole team.",
-  primaryLabel = "Get workshop early access",
-  primaryHref = interestHref("workshops"),
-  secondaryLabel = "Corporate training inquiries",
-  secondaryHref = interestHref("corporate"),
+  primaryLabel = "Get notified",
+  primaryHref = interestHref(),
 }: SiteCtaProps) {
   const pathname = usePathname()
 
@@ -202,14 +197,6 @@ export function SiteCta({
                   {primaryLabel}
                   <ArrowRight className="size-4" />
                 </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-brand-foreground/40 text-brand-foreground hover:bg-brand-foreground/10 hover:text-brand-foreground h-12 bg-transparent px-8"
-              >
-                <Link href={secondaryHref}>{secondaryLabel}</Link>
               </Button>
             </div>
           </div>

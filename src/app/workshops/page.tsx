@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { SiteNavbar } from "@/app/_components/site-navbar"
 import { SiteFooter } from "@/app/_components/site-footer"
 import { SiteCta } from "@/app/_components/site-cta"
+import { interestHref } from "@/lib/interest"
 import { WorkshopsHero } from "./_sections/hero"
 import { WorkshopsList } from "./_sections/list"
 
@@ -21,6 +22,7 @@ export default function WorkshopsPage() {
         <SiteCta
           heading="Not sure which workshop fits?"
           subtext="Tell us about your team and we'll point you to the right one — or design something custom."
+          primaryHref={interestHref("workshops")}
         />
       </main>
       <SiteFooter />

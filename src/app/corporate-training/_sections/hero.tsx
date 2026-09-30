@@ -51,17 +51,9 @@ export function CorporateTrainingHero() {
               className="hover:text-brand h-12 px-6 before:bg-white hover:shadow-white/30"
             >
               <Link href={interestHref("corporate")}>
-                Register your interest
+                Get notified
                 <ArrowRight className="size-4" />
               </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="before:bg-brand hover:border-brand h-12 px-6 hover:text-white"
-            >
-              <Link href="/workshops">Looking for a workshop instead?</Link>
             </Button>
           </div>
         </Reveal>

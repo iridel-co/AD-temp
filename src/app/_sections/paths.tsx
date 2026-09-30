@@ -192,7 +192,7 @@ const PATHS: readonly [Path, Path] = [
     title: "Train your team",
     blurb:
       "Custom leadership, culture and communication programs, built around your people and delivered on-site or off.",
-    cta: "Inquire for corporate training",
+    cta: "Get notified",
   },
 ]
 

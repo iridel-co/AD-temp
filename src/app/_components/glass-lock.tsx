@@ -59,7 +59,7 @@ export function GlassLock({
   interest,
   heading = "Coming soon",
   body = "Registration opens soon. Join the early-access list and you'll hear first.",
-  ctaLabel = "Get early access",
+  ctaLabel = "Get notified",
   variant = "panel",
   href,
   label = "Coming soon, get notified",
@@ -86,7 +86,7 @@ export function GlassLock({
             aria-hidden="true"
             className="bg-brand text-brand-foreground shadow-brand/30 group-hover/glass:bg-brand/90 mt-1 inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-xs font-semibold shadow-lg transition-all duration-300 group-hover/glass:-translate-y-0.5 group-hover/glass:shadow-xl motion-reduce:transition-none sm:h-10 sm:px-5 sm:text-sm"
           >
-            Get early access
+            Get notified
             <ArrowRight className="size-3.5 transition-transform duration-300 group-hover/glass:translate-x-0.5 sm:size-4" />
           </span>
         </Link>
