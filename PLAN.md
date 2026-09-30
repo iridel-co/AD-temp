@@ -691,6 +691,6 @@ Deviations: **`src/app/staff-login/` and `src/app/email-templates/` NOT deleted*
 - Cleanups: gallery references removed from README.md / FSD.md (code removed 2026-10-01, out of scope); floating-copy.tsx comment fixed; dead `ad:program-inquire` listener + constant removed from corporate inquiry-form.tsx (nothing dispatches it; `?program=` deep link kept). `rm -rf .next && npm run validate && npm run build` pass.
 - Browser (headless chromium, 1280x800 + 390x844, dev :3458): /gallery and /gallery/x 404; no Gallery link in nav/footer/mobile menu; zero console errors on /, /workshops, /corporate-training, /interest, /interest/thanks, /privacy, /about.
 - Coming-soon cards: home 7 workshop + 10 corporate, /workshops 7, /corporate-training 10; each one tab stop (one full Tab cycle), name contains "coming soon", click -> /interest?from=workshops|corporate with that option preselected; focus never entered [inert]; lock bottom above 18-20px "Coming soon", content blurred 10px under 40% black veil.
-- /interest: one checkbox (privacy); submit OK (200); thanks page fills >=85svh, scrollWidth == innerWidth at both sizes. DB row: company null, consent_privacy true, consent_updates false, consent_version 2026-10-01b; event.test* rows deleted, 0 remain.
-- Screenshots: scratchpad/shots2/*-d.png, *-m.png (8 views).
+- /interest: one checkbox (privacy); submit OK (200); thanks page fills >=85svh, scrollWidth == innerWidth at both sizes. DB row: company null, consent_privacy true, consent_updates false, consent_version 2026-10-01b; event.test\* rows deleted, 0 remain.
+- Screenshots: scratchpad/shots2/_-d.png, _-m.png (8 views).
 - Dev server killed by PID, port 3458 free; graphify updated.

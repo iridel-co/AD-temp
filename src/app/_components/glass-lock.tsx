@@ -79,9 +79,16 @@ export function GlassLock({
         <Link
           href={href ?? interestHref(interest)}
           aria-label={label}
-          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 rounded-[inherit] bg-black/40 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset"
+          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[inherit] bg-black/40 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset sm:gap-3"
         >
           <LockBadge hoverGroup />
+          <span
+            aria-hidden="true"
+            className="bg-brand text-brand-foreground shadow-brand/30 group-hover/glass:bg-brand/90 mt-1 inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-xs font-semibold shadow-lg transition-all duration-300 group-hover/glass:-translate-y-0.5 group-hover/glass:shadow-xl motion-reduce:transition-none sm:h-10 sm:px-5 sm:text-sm"
+          >
+            Get early access
+            <ArrowRight className="size-3.5 transition-transform duration-300 group-hover/glass:translate-x-0.5 sm:size-4" />
+          </span>
         </Link>
       </div>
     )

@@ -6,6 +6,7 @@ import { LandingSpecializations } from "./_sections/specializations"
 import { LandingPaths } from "./_sections/paths"
 import { LandingWorkshopsOpen } from "./_sections/workshops-open"
 import { LandingTestimonials } from "./_sections/testimonials"
+import { LandingClosingCta } from "./_sections/closing-cta"
 import { SiteFooter } from "./_components/site-footer"
 
 /**
@@ -53,6 +54,8 @@ export default function Page() {
             didn't convert at the fork above. */}
         <LandingSpecializations />
         <LandingTestimonials />
+        {/* Last nudge to the interest form before the footer. */}
+        <LandingClosingCta />
         <SiteFooter />
       </div>
     </main>
