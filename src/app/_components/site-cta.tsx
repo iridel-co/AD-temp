@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { interestHref } from "@/lib/interest"
 import { SPECIALIZATIONS } from "@/lib/specializations"
 import { BloomFieldBackground } from "./bloom-field-background"
 
@@ -147,10 +148,10 @@ function FocusAreaMarquee() {
 export function SiteCta({
   heading = "Ready to build a winning culture?",
   subtext = "Start with a workshop, or bring Adrian in to train your whole team.",
-  primaryLabel = "Register for a workshop",
-  primaryHref = "/workshops",
-  secondaryLabel = "Inquire for corporate training",
-  secondaryHref = "/corporate-training#inquiry",
+  primaryLabel = "Get workshop early access",
+  primaryHref = interestHref("workshops"),
+  secondaryLabel = "Corporate training inquiries",
+  secondaryHref = interestHref("corporate"),
 }: SiteCtaProps) {
   const pathname = usePathname()
 

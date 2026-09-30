@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
+import { interestHref } from "@/lib/interest"
 import { motion } from "framer-motion"
 import { ArrowRight, Check } from "lucide-react"
 import { useReducedMotionSafe } from "@/app/_lib/use-reduced-motion-safe"
@@ -19,7 +21,7 @@ import { cn } from "@/lib/utils"
  * blurb. Hovering, tapping-into-focus, or keyboard-focusing a card (desktop,
  * real pointer only — `useIsTouch`) grows its height, swaps the blurb for
  * "Useful for" + 4 bullets, and adds an Inquire button that navigates to
- * `/corporate-training?program=<key>#inquiry`. One row is always open on
+ * `/interest?from=corporate`. One row is always open on
  * desktop (default card 0). On touch devices, and below `lg`, nothing
  * expands: every card is static at the expanded height, showing the detail
  * (bullets + Inquire), never the blurb, and there is no toggle element at
@@ -213,12 +215,9 @@ export function SpecRevealCards({ items }: { items: SpecCard[] }) {
                         </li>
                       ))}
                     </ul>
-                    {/* Plain <a>, not next/link: a full load is what triggers
-                        the inquiry form's cold-load `#inquiry` landing
-                        (commit 91a834e) and its `?program=` prefill. */}
                     <div className="mt-5 flex justify-end">
-                      <a
-                        href={`/corporate-training?program=${item.key}#inquiry`}
+                      <Link
+                        href={interestHref("corporate")}
                         className={cn(
                           INQUIRE_PILL,
                           "pointer-events-auto focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
@@ -227,7 +226,7 @@ export function SpecRevealCards({ items }: { items: SpecCard[] }) {
                         Inquire
                         <span className="sr-only"> about {item.title}</span>
                         <ArrowRight className="size-4 transition-transform duration-300 group-hover/reg:translate-x-1" />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

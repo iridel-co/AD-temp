@@ -9,11 +9,12 @@ import {
   type ReactNode,
 } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { ArrowLeft, ArrowRight, Check } from "lucide-react"
 import { Reveal } from "@/app/_components/reveal"
 import { useReducedMotionSafe } from "@/app/_lib/use-reduced-motion-safe"
 import { useIsTouch } from "@/app/_lib/use-is-touch"
-import { smoothScrollToElement } from "@/app/_lib/smooth-scroll-to"
+import { interestHref } from "@/lib/interest"
 
 /**
  * Corporate Training page only — "Programs we run in-house". A horizontal
@@ -47,22 +48,13 @@ import { smoothScrollToElement } from "@/app/_lib/smooth-scroll-to"
  * section does. History: 80rem column → 96rem column (pass 3) → constant
  * 40px (pass 4).
  *
- * B <-> C contract (see docs/feedback-passes/PLAN-feedback-2.md): clicking Inquire replaces the
- * URL with `/corporate-training?program=<key>#inquiry` (so a reload / shared
- * link preselects the programme) *and* dispatches a `PROGRAM_INQUIRE_EVENT`
- * window CustomEvent with `{ key }` (so a second click on the same programme,
- * after the visitor changed the form's select by hand, re-applies — a URL
- * that didn't change can't do that). `inquiry-form.tsx` (task C) listens for
- * both. The event name string is duplicated as a local constant in both
- * files on purpose, so neither task depends on the other to compile.
- *
  * The landing page keeps `SpecRevealCards` unchanged — do not merge these two
  * components, they solve different layouts (vertical expand-in-place stack
  * vs. a horizontal constant-width rail).
  */
 
 export type ProgramCard = {
-  key: string // Specialization.key — used in ?program=<key>
+  key: string // Specialization.key
   title: string
   blurb: string
   usefulFor: string[]
@@ -86,7 +78,6 @@ const ACTIVE_REM = 34 // hovered / focused / tapped card
 const SIBLING_REM = (n: number) => (n * REST_REM - ACTIVE_REM) / (n - 1) // 20.67rem for n=10 (19.6 for n=6)
 const EASE = "cubic-bezier(0.33, 1, 0.68, 1)" // = SpecRevealCards' [0.33,1,0.68,1]
 const DURATION_MS = 420 // = SpecRevealCards' 0.42s
-const PROGRAM_INQUIRE_EVENT = "ad:program-inquire" // Must match the constant in corporate-training/_sections/inquiry-form.tsx — see docs/feedback-passes/PLAN-feedback-2.md.
 
 const RAIL =
   "no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-6 px-6 pb-1 sm:scroll-px-8 sm:px-8 lg:snap-none lg:gap-5 lg:scroll-px-0 lg:pr-0 lg:pb-0 lg:pl-10"
@@ -175,24 +166,6 @@ function CarouselArrows({
       </button>
     </div>
   )
-}
-
-/** Replaces the URL, fires the B<->C event, then scrolls the form into view
- *  — the scroll and prefill signal are separate on purpose (see file doc
- *  comment). */
-function inquire(key: string, reduce: boolean) {
-  window.history.replaceState(
-    window.history.state,
-    "",
-    `/corporate-training?program=${encodeURIComponent(key)}#inquiry`
-  )
-  window.dispatchEvent(
-    new CustomEvent(PROGRAM_INQUIRE_EVENT, { detail: { key } })
-  )
-  const target = document.getElementById("inquiry")
-  if (!target) return
-  if (reduce) target.scrollIntoView({ block: "start", behavior: "instant" })
-  else smoothScrollToElement(target)
 }
 
 export function ProgramCarousel({
@@ -313,18 +286,14 @@ export function ProgramCarousel({
             without touching any width. ring-inset because `Collapse`'s
             overflow-hidden clips an outer ring at this edge. */}
         <div className="mt-5 flex justify-end">
-          <a
-            href={`/corporate-training?program=${item.key}#inquiry`}
-            onClick={(e) => {
-              e.preventDefault()
-              inquire(item.key, reduce)
-            }}
+          <Link
+            href={interestHref("corporate")}
             className={`${REGISTER_PILL} pointer-events-auto focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none focus-visible:ring-inset`}
           >
             Inquire
             <span className="sr-only"> about {item.title}</span>
             <ArrowRight className="size-4 transition-transform duration-300 group-hover/reg:translate-x-1" />
-          </a>
+          </Link>
         </div>
       </div>
     )

@@ -31,7 +31,7 @@ export default function GalleryPage() {
         <FloatingWall />
         <SiteCta
           heading="The next one could be yours"
-          subtext="See what's open for registration, or ask about a private session."
+          subtext="Get first word on new dates, or ask about a private session."
         />
       </main>
       <SiteFooter />

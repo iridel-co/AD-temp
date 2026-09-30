@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { interestHref } from "@/lib/interest"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { SplitReveal } from "@/app/_components/split-reveal"
@@ -49,8 +50,8 @@ export function CorporateTrainingHero() {
               size="lg"
               className="hover:text-brand h-12 px-6 before:bg-white hover:shadow-white/30"
             >
-              <Link href="#inquiry">
-                Start an inquiry
+              <Link href={interestHref("corporate")}>
+                Register your interest
                 <ArrowRight className="size-4" />
               </Link>
             </Button>

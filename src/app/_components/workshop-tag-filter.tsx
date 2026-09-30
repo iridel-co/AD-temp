@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
+import { interestHref } from "@/lib/interest"
 import { Button } from "@/components/ui/button"
 import { EventCards } from "@/app/_components/event-cards"
 import { WORKSHOP_TAG_ICONS } from "@/app/_components/workshop-tags"
@@ -204,7 +205,7 @@ export function WorkshopTagFilter({ workshops }: { workshops: Workshop[] }) {
               Show all workshops
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/corporate-training#inquiry">
+              <Link href={interestHref("corporate")}>
                 Ask about in-house training
               </Link>
             </Button>

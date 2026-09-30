@@ -15,10 +15,8 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { useNavbarTheme } from "@/app/_lib/use-navbar-theme"
-import {
-  smoothScrollToElement,
-  smoothScrollToTop,
-} from "@/app/_lib/smooth-scroll-to"
+import { interestHref } from "@/lib/interest"
+import { smoothScrollToTop } from "@/app/_lib/smooth-scroll-to"
 import { cn } from "@/lib/utils"
 
 /**
@@ -43,11 +41,8 @@ import { cn } from "@/lib/utils"
  * no translucency/backdrop-blur — so a mid-scroll-restore reload never reads
  * as a gray blend of the two (cf. tasks/lessons.md 2026-09-03).
  *
- * The single CTA is workshop-forward on purpose: growing public-workshop
- * registrations is the goal (corporate is already the bigger channel). It
- * points at the fork (`#which-path` on <LandingPaths>, landing page only)
- * rather than straight at `/workshops` — from any other page it's `/` +
- * hash, so it lands on the homepage already scrolled to the choice.
+ * The single CTA opens the interest form (`/interest`), with the interest
+ * preselected from the page it sits on: workshops, corporate, or both.
  */
 
 const LINKS = [
@@ -57,7 +52,6 @@ const LINKS = [
   { href: "/gallery", label: "Gallery" },
 ]
 
-const CTA_HREF = "/#which-path"
 const CTA_LABEL = "Train with Me"
 
 type SiteNavbarProps = {
@@ -108,25 +102,11 @@ export function SiteNavbar({
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href)
 
-  // Next's App Router only auto-scrolls to a URL hash on an actual
-  // navigation — clicking a same-page `Link` (already on `/`) just rewrites
-  // the hash and leaves scroll position alone. Intercept and scroll by hand
-  // whenever we're already on the target page.
-  //
-  // `smoothScrollToElement` (not native `scrollIntoView`) because the target
-  // is `<LandingPaths>`: as the page scrolls under a stationary cursor, it
-  // crosses into the card grid and fires that card's `mouseenter`, which
-  // kicks off the hover take-over's `grid-template-columns` transition — a
-  // layout shift that silently abandons a native smooth scroll partway there
-  // (cf. tasks/lessons.md "Smooth-Scroll Anchor Navigation").
-  const handleCtaClick = (e: React.MouseEvent) => {
-    if (pathname !== "/") return
-    e.preventDefault()
-    const target = document.getElementById("which-path")
-    if (!target) return
-    window.history.replaceState(null, "", CTA_HREF)
-    smoothScrollToElement(target)
-  }
+  const ctaHref = pathname.startsWith("/workshops")
+    ? interestHref("workshops")
+    : pathname.startsWith("/corporate-training")
+      ? interestHref("corporate")
+      : interestHref()
 
   // Clicking a nav link for the page you're already on doesn't navigate (Next
   // just no-ops), which reads as broken if you're scrolled deep into that
@@ -209,9 +189,7 @@ export function SiteNavbar({
                 dark && "nav-cta-dark"
               )}
             >
-              <Link href={CTA_HREF} onClick={handleCtaClick}>
-                {CTA_LABEL}
-              </Link>
+              <Link href={ctaHref}>{CTA_LABEL}</Link>
             </Button>
           </motion.div>
         </div>
@@ -232,9 +210,7 @@ export function SiteNavbar({
                 dark && "nav-cta-dark"
               )}
             >
-              <Link href={CTA_HREF} onClick={handleCtaClick}>
-                {CTA_LABEL}
-              </Link>
+              <Link href={ctaHref}>{CTA_LABEL}</Link>
             </Button>
           </motion.div>
 

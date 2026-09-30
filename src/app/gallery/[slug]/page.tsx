@@ -6,6 +6,7 @@ import { SiteCta } from "@/app/_components/site-cta"
 import { EventHero } from "./_sections/event-hero"
 import { EventPhotoWall } from "./_sections/photo-wall"
 import { GALLERY_EVENTS, getGalleryEvent } from "@/lib/gallery"
+import { interestHref } from "@/lib/interest"
 import { getWorkshop } from "@/lib/workshops"
 
 type Params = { params: Promise<{ slug: string }> }
@@ -49,14 +50,14 @@ export default async function GalleryEventPage({ params }: Params) {
         <SiteCta
           heading={
             related
-              ? `${related.title} is open for registration`
+              ? `${related.title} opens soon`
               : "Want to be in the next one?"
           }
           subtext="Join a live session, or bring this training in-house for your own team."
           primaryLabel="Join the Experience"
           primaryHref={related ? `/workshops/${related.slug}` : "/workshops"}
           secondaryLabel="Create one for your team"
-          secondaryHref="/corporate-training#inquiry"
+          secondaryHref={interestHref("corporate")}
         />
       </main>
       <SiteFooter />

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { interestHref } from "@/lib/interest"
 import { ArrowRight } from "lucide-react"
 import {
   motion,
@@ -180,7 +181,7 @@ const PATHS: readonly [Path, Path] = [
     cta: "See upcoming workshops",
   },
   {
-    href: "/corporate-training#inquiry",
+    href: interestHref("corporate"),
     bg: "/images/hero/corporate-bg.jpg",
     bgBlur:
       "data:image/jpeg;base64,/9j/2wBDABIMDRANCxIQDhAUExIVGywdGxgYGzYnKSAsQDlEQz85Pj1HUGZXR0thTT0+WXlaYWltcnNyRVV9hnxvhWZwcm7/2wBDARMUFBsXGzQdHTRuST5Jbm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm7/wAARCAAGAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAT/xAAgEAABAwQCAwAAAAAAAAAAAAABAAIDBRESIQQTMUHh/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/EABYRAQEBAAAAAAAAAAAAAAAAAAABMf/aAAwDAQACEQMRAD8AsolbZypJWyxvDWtGO8j5PtUS1CMSvx7QLm2/qInBuv/Z",

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { interestHref } from "@/lib/interest"
 import { Reveal } from "@/app/_components/reveal"
 
 /**
@@ -34,10 +35,10 @@ export function TeamCta() {
           </div>
 
           <Link
-            href="/corporate-training#inquiry"
+            href={interestHref("corporate")}
             className="text-foreground ring-border/70 hover:ring-brand/60 hover:text-brand focus-visible:ring-brand group inline-flex min-h-11 shrink-0 items-center gap-2.5 rounded-full px-5 text-sm font-medium ring-1 transition-[color,box-shadow] focus-visible:ring-2 focus-visible:outline-none"
           >
-            Explore corporate training
+            Ask about in-house training
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" />
           </Link>
         </Reveal>
