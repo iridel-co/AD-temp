@@ -5,6 +5,7 @@ import { createPortal } from "react-dom"
 import { useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowLeft, ArrowRight, MapPin } from "lucide-react"
+import { interestHref } from "@/lib/interest"
 import { cn } from "@/lib/utils"
 import type { Workshop } from "@/lib/workshops"
 
@@ -307,7 +308,7 @@ export function WorkshopsCalendar({
                   onMouseLeave={() => closePopover(key)}
                   onFocus={() => openPopover(key)}
                   onBlur={() => closePopover(key)}
-                  onClick={() => router.push(`/workshops/${workshop.slug}`)}
+                  onClick={() => router.push(interestHref("workshops"))}
                   className={cn(
                     CELL,
                     "text-brand hover:bg-brand/8 focus-visible:bg-brand/8 group cursor-pointer font-semibold focus-visible:outline-none"

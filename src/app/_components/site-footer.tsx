@@ -10,8 +10,7 @@ import {
 } from "lucide-react"
 
 /**
- * Global footer — used on every page including the landing page. Carries the
- * standing "Demo by iridel.com" credit (Iridel lessons 2026-07-16).
+ * Global footer — used on every page including the landing page.
  */
 
 const NAV = [
@@ -145,14 +144,6 @@ export function SiteFooter() {
               Privacy Notice
             </Link>
           </p>
-          <a
-            href="https://iridel.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-white/55 transition-colors hover:text-white/80"
-          >
-            Demo by iridel.com
-          </a>
         </div>
       </div>
 

@@ -26,10 +26,8 @@ export const CONSENT_VERSION = "2026-10-01"
 /** Legal entity named in the consent text and on the privacy notice. */
 export const DATA_CONTROLLER = "Maximum Impact Training Development"
 
-// TODO(client): the privacy contact email is still pending from Adrian's team.
-// While it is null, the privacy notice shows a visible "to follow" placeholder
-// instead of a mailto link. Set this before the event on Oct 2.
-export const PRIVACY_CONTACT_EMAIL: string | null = null
+// Interim privacy contact until the client confirms their own address.
+export const PRIVACY_CONTACT_EMAIL = "chanabayabay@gmail.com"
 
 /** sessionStorage key: the last page visited before the form (written by <PathTracker>). */
 export const LAST_PATH_KEY = "ad-last-path"
@@ -55,7 +53,13 @@ export const interestSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name.").max(120),
   email: z.string().trim().email("Enter a valid email address.").max(254),
   designation: z.string().trim().min(2, "Your role or title.").max(120),
-  company: z.string().trim().min(2, "Which company? Self-employed is fine.").max(120),
+  // Optional: blank is fine (the route stores null); if given, 2-120 chars.
+  company: z
+    .string()
+    .trim()
+    .max(120)
+    .refine((v) => v === "" || v.length >= 2, "Enter at least 2 characters.")
+    .optional(),
   interest: z.enum(INTERESTS, { message: "Pick one." }),
   consentPrivacy: z.literal(true, {
     message: "You need to agree to continue.",

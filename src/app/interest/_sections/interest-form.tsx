@@ -193,11 +193,10 @@ export function InterestForm({
                 {...register("designation")}
               />
             </Field>
-            <Field label="Company" error={errors.company?.message}>
+            <Field label="Company (optional)" error={errors.company?.message}>
               <Input
                 className="placeholder:text-muted-foreground/50 h-12 text-base"
                 autoComplete="organization"
-                placeholder="Company, or Self-employed"
                 {...register("company")}
               />
             </Field>

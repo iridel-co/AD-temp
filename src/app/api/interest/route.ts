@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         p_full_name: fullName.trim(),
         p_email: email.trim().toLowerCase(),
         p_designation: designation.trim(),
-        p_company: company.trim(),
+        p_company: company?.trim() || null,
         p_interest: interest,
         p_source_path: sourcePath ?? null,
         p_consent_privacy: true,

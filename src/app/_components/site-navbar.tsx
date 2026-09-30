@@ -52,7 +52,7 @@ const LINKS = [
   { href: "/gallery", label: "Gallery" },
 ]
 
-const CTA_LABEL = "Train with Me"
+const CTA_LABEL = "Get notified"
 
 type SiteNavbarProps = {
   /** Landing page only. Starts the bar at the hero's bottom edge (negative

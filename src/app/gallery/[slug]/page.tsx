@@ -55,7 +55,7 @@ export default async function GalleryEventPage({ params }: Params) {
           }
           subtext="Join a live session, or bring this training in-house for your own team."
           primaryLabel="Join the Experience"
-          primaryHref={related ? `/workshops/${related.slug}` : "/workshops"}
+          primaryHref={interestHref("workshops")}
           secondaryLabel="Create one for your team"
           secondaryHref={interestHref("corporate")}
         />

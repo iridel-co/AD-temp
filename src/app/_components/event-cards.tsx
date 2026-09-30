@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { ArrowLeft, ArrowRight, MapPin, Ticket } from "lucide-react"
+import { GlassLock } from "@/app/_components/glass-lock"
 import { Reveal } from "@/app/_components/reveal"
 import { WorkshopTagPills } from "@/app/_components/workshop-tags"
+import { interestHref } from "@/lib/interest"
 import { type Workshop } from "@/lib/workshops"
 
 /**
@@ -268,14 +269,14 @@ export function EventCards({
 
   const renderCard = (w: Workshop, i: number) => {
     const isActive = interactive && active === i
-    // A resting desktop card shows just its date eyebrow + title. The
-    // summary, venue/price and Register button unfurl on the hovered
-    // card, and show always on mobile (where every card is full-width).
+    // A resting desktop card shows just its eyebrow + title. The summary and
+    // venue/price unfurl on the hovered card, and show always on mobile.
+    // The whole card sits under a GlassLock "Coming soon" veil and is one
+    // link to the workshops interest form; the content underneath is inert.
     const revealed = !interactive || isActive
     return (
-      <Link
+      <div
         key={w.slug}
-        href={`/workshops/${w.slug}`}
         onMouseEnter={() => interactive && setActive(i)}
         onFocus={() => interactive && setActive(i)}
         onBlur={() => interactive && setActive(null)}
@@ -284,44 +285,46 @@ export function EventCards({
           isGrid || interactive ? "" : "lg:min-w-80 lg:flex-1 lg:basis-0"
         }`}
       >
-        <Image
-          src={w.image}
-          alt={`${w.title} — Coach Adrian Ding`}
-          fill
-          priority={priority}
-          sizes="(min-width: 1024px) 55vw, 100vw"
-          className="object-cover object-[center_26%]"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/40 to-black/5" />
+        <GlassLock
+          variant="card"
+          href={interestHref("workshops")}
+          label={`${w.title}: coming soon, get notified`}
+          className="absolute inset-0 overflow-hidden rounded-[inherit]"
+        >
+          <Image
+            src={w.image}
+            alt={`${w.title} — Coach Adrian Ding`}
+            fill
+            priority={priority}
+            sizes="(min-width: 1024px) 55vw, 100vw"
+            className="object-cover object-[center_26%]"
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/40 to-black/5" />
 
-        <WorkshopTagPills
-          tags={w.tags}
-          className="absolute top-5 right-6 left-6 z-[1] lg:top-6 lg:right-8 lg:left-8"
-        />
+          <WorkshopTagPills
+            tags={w.tags}
+            className="absolute top-5 right-6 left-6 z-[1] lg:top-6 lg:right-8 lg:left-8"
+          />
 
-        <div className="relative flex h-full w-full flex-col justify-end gap-3 px-6 py-8 text-left text-white lg:px-8">
-          <p className="text-xs font-semibold tracking-[0.22em] text-white/75 uppercase">
-            Dates coming soon
-          </p>
-          <h3 className="text-[1.75rem] leading-[1.08] font-extrabold tracking-[-0.01em] text-balance lg:text-[2.125rem]">
-            {w.title}
-          </h3>
+          <div className="relative flex h-full w-full flex-col justify-end gap-3 px-6 py-8 text-left text-white lg:px-8">
+            <p className="text-xs font-semibold tracking-[0.22em] text-white/75 uppercase">
+              Dates coming soon
+            </p>
+            <h3 className="text-[1.75rem] leading-[1.08] font-extrabold tracking-[-0.01em] text-balance lg:text-[2.125rem]">
+              {w.title}
+            </h3>
 
-          <div
-            className={`grid w-full transition-[grid-template-rows,opacity] duration-500 ease-out ${
-              revealed
-                ? "grid-rows-[1fr] opacity-100"
-                : "grid-rows-[0fr] opacity-0 lg:pointer-events-none"
-            }`}
-          >
-            <div className="flex min-h-0 flex-col gap-4 overflow-hidden pt-3">
-              <p className="max-w-md text-base leading-relaxed text-white/85">
-                {w.summary}
-              </p>
-              {/* Venue/price and Register share one row, pinned to the
-                  card's bottom edge — `justify-between` spaces them
-                  apart instead of stacking Register on its own row. */}
-              <div className="flex items-end justify-between gap-3 pt-1">
+            <div
+              className={`grid w-full transition-[grid-template-rows,opacity] duration-500 ease-out ${
+                revealed
+                  ? "grid-rows-[1fr] opacity-100"
+                  : "grid-rows-[0fr] opacity-0 lg:pointer-events-none"
+              }`}
+            >
+              <div className="flex min-h-0 flex-col gap-4 overflow-hidden pt-3">
+                <p className="max-w-md text-base leading-relaxed text-white/85">
+                  {w.summary}
+                </p>
                 <dl className="flex flex-col gap-1.5 text-sm text-white/85">
                   <div className="flex items-center gap-1.5">
                     <MapPin className="size-4 shrink-0" />
@@ -334,26 +337,11 @@ export function EventCards({
                     </span>
                   </div>
                 </dl>
-                {/* Register carries its own hover animation, separate
-                    from the card-wide hover that drives the expansion.
-                    Same wipe-fill + color-invert mechanic as `Button`
-                    (see button.tsx) — a `::before` sweeps in from the
-                    left and the label inverts brand-red-on-white to
-                    white-on-dark. Lift-only, never scale: this pill
-                    sits at the bottom-right corner of an
-                    `overflow-hidden rounded-4xl` card, so any
-                    transform that grows the box (scale) clips against
-                    that edge. Translate is safe since it only needs
-                    headroom above. */}
-                <span className="group/reg text-brand-foreground bg-brand before:bg-background hover:text-foreground relative isolate inline-flex shrink-0 items-center gap-2 overflow-hidden rounded-full px-5 py-2.5 text-sm font-semibold shadow-lg shadow-black/25 transition-[color,transform,box-shadow] duration-300 before:absolute before:inset-0 before:-z-10 before:origin-left before:scale-x-0 before:transition-transform before:duration-300 before:content-[''] hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/40 hover:before:scale-x-100">
-                  Learn more
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover/reg:translate-x-1" />
-                </span>
               </div>
             </div>
           </div>
-        </div>
-      </Link>
+        </GlassLock>
+      </div>
     )
   }
 

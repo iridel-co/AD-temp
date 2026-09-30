@@ -2,10 +2,8 @@ import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 
 /**
- * Single source for the two fonts every social card needs. Both routes
- * (`src/app/opengraph-image.tsx`, `src/app/workshops/[slug]/opengraph-image.tsx`)
- * previously read these files themselves, duplicated; this is the shared
- * version the approved mockups (`og-mockups/round5/render5.mjs`) render with.
+ * Single source for the two fonts every social card needs (used by
+ * `src/app/opengraph-image.tsx`); this is the shared version the approved mockups (`og-mockups/round5/render5.mjs`) render with.
  *
  * TTF, not the site's own `.woff2` — Satori's font decoder throws on woff2.
  *

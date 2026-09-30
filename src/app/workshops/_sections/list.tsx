@@ -27,6 +27,7 @@ export function WorkshopsList() {
           interest="workshops"
           heading="Calendar coming soon"
           body="Public workshop dates are being finalised. Join the list to get them first."
+          strong
           className="w-full"
         >
           <WorkshopsCalendar workshops={OPEN_WORKSHOPS} className="w-full" />

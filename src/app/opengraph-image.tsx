@@ -13,14 +13,13 @@ export const size = { width: 1200, height: 630 }
 export const contentType = "image/jpeg"
 
 /**
- * Site-wide social card — every non-workshop page inherits this route. This
+ * Site-wide social card — every page inherits this route. This
  * is design "F2", round 10 of `og-mockups/` (see that folder's `NOTES.md`
  * rounds 9-10 for the full history), approved by Chan on 2026-09-29 and
- * ported mechanically from `round10/render10.mjs`. Distinct from the
- * per-course card family (`workshops/[slug]/opengraph-image.tsx`, layout
- * "L1" + wordmark "E6") — that route and its shared helpers in
- * `src/lib/og-card.tsx` are untouched by this file except for `OG_INK` and
- * `ogScrim()`, which this card reuses as-is.
+ * ported mechanically from `round10/render10.mjs`. The per-course card
+ * family (layout "L1" + wordmark "E6") was removed with the workshop detail
+ * pages; this card reuses only `OG_INK` and `ogScrim()` from
+ * `src/lib/og-card.tsx`.
  *
  * Layout: treated room-plate background (same `ogPhotoForPath` pipeline the
  * per-course cards use) behind a hook block vertically centered by ink

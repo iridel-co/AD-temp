@@ -25,9 +25,9 @@ export function PrivacyNotice() {
         <div className="space-y-3">
           <h2 className="font-serif text-2xl">2. What we collect</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Your full name, email, designation and company; what you are
-            interested in; whether you want updates; the page you came from;
-            your browser&apos;s user-agent; and timestamps.
+            Your full name, email, designation and company (if you give one);
+            what you are interested in; whether you want updates; the page you
+            came from; your browser&apos;s user-agent; and timestamps.
           </p>
         </div>
 
@@ -88,21 +88,14 @@ export function PrivacyNotice() {
 
         <div className="space-y-3">
           <h2 className="font-serif text-2xl">9. Contact</h2>
-          {/* TODO(client): PRIVACY_CONTACT_EMAIL is pending from Adrian's team. */}
           <p className="text-muted-foreground leading-relaxed">
             To use any of these rights, write to us at{" "}
-            {PRIVACY_CONTACT_EMAIL ? (
-              <a
-                href={`mailto:${PRIVACY_CONTACT_EMAIL}`}
-                className="text-brand underline underline-offset-4"
-              >
-                {PRIVACY_CONTACT_EMAIL}
-              </a>
-            ) : (
-              <span className="bg-brand/10 text-brand rounded px-1.5">
-                privacy contact email to follow
-              </span>
-            )}
+            <a
+              href={`mailto:${PRIVACY_CONTACT_EMAIL}`}
+              className="text-brand underline underline-offset-4"
+            >
+              {PRIVACY_CONTACT_EMAIL}
+            </a>
             , or call 0920 900 7709.
           </p>
         </div>
