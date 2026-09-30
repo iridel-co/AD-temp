@@ -13,6 +13,8 @@
  * correctly when this returns `null`.
  */
 
+import type { Interest } from "@/lib/interest"
+
 export type WorkshopHandoff = {
   kind: "workshop"
   slug: string
@@ -34,7 +36,13 @@ export type CorporateHandoff = {
   alsoInterested?: string[]
 }
 
-export type Handoff = WorkshopHandoff | CorporateHandoff
+export type InterestHandoff = {
+  kind: "interest"
+  fullName: string
+  interest: Interest
+}
+
+export type Handoff = WorkshopHandoff | CorporateHandoff | InterestHandoff
 
 const KEY = "ad-demo-handoff"
 

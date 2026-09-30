@@ -3,6 +3,7 @@ import { Red_Hat_Display, Geist_Mono } from "next/font/google"
 import localFont from "next/font/local"
 import "./globals.css"
 import { ScrollRefresh } from "./_components/scroll-refresh"
+import { PathTracker } from "./_components/path-tracker"
 
 const redHatDisplay = Red_Hat_Display({
   variable: "--font-red-hat",
@@ -95,6 +96,7 @@ export default function RootLayout({
         {/* Recomputes ScrollTrigger positions once fonts/images settle — see
             the component for why every reveal fires late without it. */}
         <ScrollRefresh />
+        <PathTracker />
       </body>
     </html>
   )

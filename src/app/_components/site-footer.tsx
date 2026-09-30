@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { PRIVACY_PATH } from "@/lib/interest"
 import {
   Instagram,
   Linkedin,
@@ -18,10 +19,6 @@ const NAV = [
   { href: "/corporate-training", label: "Corporate Training" },
   { href: "/about", label: "About" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/staff-login", label: "Staff login" },
-  // Demo-review route: the three transactional email templates, for the client
-  // to sign off on before the send wiring is built in phase 2.
-  { href: "/email-templates", label: "Email templates" },
 ]
 
 // Kept in step with the hero's own SOCIALS (hero-editorial.tsx) — same five
@@ -140,7 +137,13 @@ export function SiteFooter() {
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-center sm:flex-row sm:items-center sm:text-left lg:mt-14">
           <p className="text-xs text-white/55">
             © {new Date().getFullYear()} Coach Adrian Ding · Maximum Impact PH.
-            All rights reserved.
+            All rights reserved.{" "}
+            <Link
+              href={PRIVACY_PATH}
+              className="transition-colors hover:text-white/80"
+            >
+              Privacy Notice
+            </Link>
           </p>
           <a
             href="https://iridel.com"
