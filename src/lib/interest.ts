@@ -71,4 +71,3 @@ export type InterestValues = z.infer<typeof interestSchema>
 export const interestPayloadSchema = interestSchema.extend({
   sourcePath: z.string().startsWith("/").max(300).optional(),
 })
-export type InterestPayload = z.infer<typeof interestPayloadSchema>

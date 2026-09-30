@@ -1,6 +1,11 @@
 /**
- * Public workshop catalogue — powers the workshops list, each workshop detail
- * page (with its countdown + registration form), and the landing-page preview.
+ * Public workshop catalogue — powers the workshops list, calendar and the
+ * landing-page preview. Detail pages are switched off (`/workshops/[slug]`
+ * redirects to the interest form), so the long-form fields below (`price`,
+ * `intro`, `audience`, `format`, `curriculum`, `inclusions`, `problem`,
+ * `outcomes`, `whatToExpect`, `primerBlurb`, `seatsTotal`, `seatsLeft`) are
+ * not rendered anywhere today; they are kept as the client's course material
+ * and the CMS field contract.
  *
  * In the real build this is CMS-managed.
  *
@@ -76,7 +81,7 @@ export type Workshop = {
   seatsLeft: number
 }
 
-export const WORKSHOPS: Workshop[] = [
+const WORKSHOPS: Workshop[] = [
   {
     // Content below is the client's own course material (supplied 2026-09-17),
     // lightly formatted for the page — not representative copy. `problem`,
@@ -529,17 +534,3 @@ export const WORKSHOPS: Workshop[] = [
 ]
 
 export const OPEN_WORKSHOPS = WORKSHOPS.filter((w) => w.status === "open")
-export const PAST_WORKSHOPS = WORKSHOPS.filter((w) => w.status === "past")
-
-/**
- * Soonest open workshop by start date — powers the landing announcement strip.
- * `start` is ISO 8601 with a fixed +08:00 offset on every row, so a lexical
- * sort is chronological.
- */
-export const NEXT_WORKSHOP: Workshop | undefined = [...OPEN_WORKSHOPS].sort(
-  (a, b) => a.start.localeCompare(b.start)
-)[0]
-
-export function getWorkshop(slug: string): Workshop | undefined {
-  return WORKSHOPS.find((w) => w.slug === slug)
-}

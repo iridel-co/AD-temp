@@ -144,7 +144,7 @@ export const SPECIALIZATIONS: Specialization[] = [
  * practice (sales, service, change, EQ) but NOT confirmed — confirm or delete
  * each with Adrian before handoff.
  */
-export const PLACEHOLDER_PROGRAMMES: Specialization[] = [
+const PLACEHOLDER_PROGRAMMES: Specialization[] = [
   // TODO: placeholder programme — confirm with Adrian
   {
     key: "sales-leadership",

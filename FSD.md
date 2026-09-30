@@ -26,6 +26,13 @@
 
 ---
 
+**Demo removals, 2026-10-01.** Where this spec cites demo files, these no longer exist:
+`sticky-register-bar.tsx`, `register-cta.tsx`, `payment.tsx`, `confirmed.tsx`, `primer.tsx`
+(`/workshops/[slug]` and `/registered` are gone; the slug route redirects to the interest
+form), `src/lib/workshop-faq.ts` (FAQ/payment-hold policy copy), `countdown.tsx`,
+`primer-player.tsx`, and `/corporate-training/inquiry-received`. The spec's behaviour
+still stands as the Phase 2 target; only the demo's reference implementation was removed.
+
 ## 1. Purpose & scope
 
 The demo shows every form and post-submit page as frontend-only UI. Nothing is stored or sent, and no one can sign in. This document specifies the behaviour Phase 2 must build behind that UI.

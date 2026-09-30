@@ -1,9 +1,10 @@
 /**
  * Form → confirmation-page bridge.
  *
- * Both forms are frontend-only (no API, no CRM), but the confirmation pages
- * still have to read back what was submitted so they feel like a real
- * post-submit destination rather than a static page. `sessionStorage` carries
+ * The forms carry what was submitted to a confirmation page so it feels like a
+ * real post-submit destination rather than a static page. Only the interest
+ * flow (`/interest/thanks`) reads it today; the corporate form is locked and
+ * its confirmation route is retired. `sessionStorage` carries
  * the payload across the `router.push` and dies with the tab — nothing is sent
  * anywhere, which is what the demo's own footnote promises.
  *
@@ -15,15 +16,7 @@
 
 import type { Interest } from "@/lib/interest"
 
-export type WorkshopHandoff = {
-  kind: "workshop"
-  slug: string
-  fullName: string
-  email: string
-  phone: string
-}
-
-export type CorporateHandoff = {
+type CorporateHandoff = {
   kind: "corporate"
   fullName: string
   email: string
@@ -42,7 +35,7 @@ export type InterestHandoff = {
   interest: Interest
 }
 
-export type Handoff = WorkshopHandoff | CorporateHandoff | InterestHandoff
+export type Handoff = CorporateHandoff | InterestHandoff
 
 const KEY = "ad-demo-handoff"
 
@@ -71,14 +64,6 @@ export function readHandoff<K extends Handoff["kind"]>(
     return null
   } catch {
     return null
-  }
-}
-
-export function clearHandoff(): void {
-  try {
-    sessionStorage.removeItem(KEY)
-  } catch {
-    // Nothing to do — see above.
   }
 }
 

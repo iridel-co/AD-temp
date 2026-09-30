@@ -60,7 +60,7 @@ async function duotone(
 
 /** Treats a raw image buffer (any format sharp reads) into a duotoned,
  *  1200x630 JPEG data URI ready to inline as a Satori `<img src>`. */
-export async function treatOgPhoto(buf: Buffer): Promise<string> {
+async function treatOgPhoto(buf: Buffer): Promise<string> {
   const resized = await sharp(buf)
     .resize(1200, 630, { fit: "cover", position: sharp.strategy.attention })
     .normalise()

@@ -60,19 +60,28 @@ decisions) and the dev team (architecture, gotchas, setup) building Phase 2.
 
 ---
 
+> **Removed 2026-10-01.** Everything below that describes the following is historical:
+> `/workshops/[slug]` detail pages (now a redirect), `/workshops/[slug]/registered`,
+> the per-workshop Open Graph card (`check:og` now checks only the site-wide card),
+> `/corporate-training/inquiry-received` (route deleted; the corporate form is behind a
+> GlassLock), the gallery routes, and the files `countdown.tsx`, `primer-player.tsx`,
+> `floating-copy.tsx`, `trust-logos.tsx`,
+> `src/lib/workshop-faq.ts`. `src/lib/og-card.tsx` keeps only `OG_INK` and `ogScrim()`.
+> Workshop fields no longer rendered (`price`, `intro`, `audience`, `format`,
+> `curriculum`, `inclusions`, `problem`, `outcomes`, `whatToExpect`, `primerBlurb`,
+> `seatsTotal`, `seatsLeft`) stay in `workshops.ts` as the CMS field contract.
+
 ## Status at a glance
 
-| Route                                  | Status        | Real vs. mocked                                                                                                                                                          |
-| -------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/`                                    | Built         | Real copy/layout; stats, testimonials, some company logos are placeholder (see [Phase 2 map](#phase-2-map))                                                              |
-| `/about`                               | Built         | Real copy/layout; timeline milestones and industry-count stat pending client confirm                                                                                     |
-| `/workshops`                           | Built         | Real UI (filter, calendar); catalogue is static mock data                                                                                                                |
-| `/workshops/[slug]`                    | Built         | Real UI incl. registration form, FAQ, sticky register bar; prices, curriculum framing, testimonials are placeholders pending sign-off. Has its own `opengraph-image.tsx` |
-| `/workshops/[slug]/registered`         | Built         | Confirmation UI only — form doesn't submit; payment details (bank/GCash) are placeholders. `noindex`                                                                     |
-| `/corporate-training`                  | Built         | Real UI incl. programme carousel (10 programmes, 4 are placeholders to judge a longer list) and inquiry form                                                             |
-| `/corporate-training/inquiry-received` | Built         | Confirmation UI only — form doesn't submit. `noindex`                                                                                                                    |
-| `/staff-login`                         | UI shell only | "Sign in with Google" button is inert, no auth provider                                                                                                                  |
-| `/email-templates`                     | UI shell only | Static preview of 3 email templates (copy + layout), no send wiring, `noindex`                                                                                           |
+| Route                 | Status        | Real vs. mocked                                                                                                |
+| --------------------- | ------------- | -------------------------------------------------------------------------------------------------------------- |
+| `/`                   | Built         | Real copy/layout; stats, testimonials, some company logos are placeholder (see [Phase 2 map](#phase-2-map))    |
+| `/about`              | Built         | Real copy/layout; timeline milestones and industry-count stat pending client confirm                           |
+| `/workshops`          | Built         | Real UI (filter, calendar); catalogue is static mock data                                                      |
+| `/workshops/[slug]`   | Redirect      | Permanently switched off: redirects to `/interest?interest=workshops` while the event build collects interest. |
+| `/corporate-training` | Built         | Real UI incl. programme carousel (10 programmes, 4 are placeholders to judge a longer list) and inquiry form   |
+| `/staff-login`        | UI shell only | "Sign in with Google" button is inert, no auth provider                                                        |
+| `/email-templates`    | UI shell only | Static preview of 3 email templates (copy + layout), no send wiring, `noindex`                                 |
 
 `npm run validate` (typecheck + lint + format check) is the pre-delivery gate — see
 [Quality gates](#quality-gates).
@@ -83,7 +92,7 @@ decisions) and the dev team (architecture, gotchas, setup) building Phase 2.
 
 | Feature                                        | Current mock (file)                                                                                                        | Phase 2 system                                                 | Notes & traps                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Workshops catalogue                            | `src/lib/workshops.ts` (static array, incl. `NEXT_WORKSHOP` derived export, `WORKSHOP_TAGS` taxonomy)                      | CMS                                                            | Field shape (`problem`, `outcomes`, `whatToExpect`, `primerBlurb`, `seatsLeft`, `tags`) is the contract to replicate. `tags` becomes a fixed multi-select taxonomy (1–3/course), not free text — the `/workshops` filter chips derive from it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Workshops catalogue                            | `src/lib/workshops.ts` (static array, `OPEN_WORKSHOPS` derived export, `WORKSHOP_TAGS` taxonomy)                           | CMS                                                            | Field shape (`problem`, `outcomes`, `whatToExpect`, `primerBlurb`, `seatsLeft`, `tags`) is the contract to replicate. `tags` becomes a fixed multi-select taxonomy (1–3/course), not free text — the `/workshops` filter chips derive from it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | Workshop registration form                     | `workshops/[slug]/_sections/registration-form.tsx`                                                                         | CRM (lead capture)                                             | React Hook Form + Zod, client-side only. Must: (1) create CRM record with status `NEW` first, (2) then email owners. Record write failing must block the visitor from reaching the confirmation page; email failing must not (retry the email, keep the record). Full contract in `PRD.md` → "Phase 2 handoff — lead capture". Full step-by-step flow incl. payment/CRM/email: [`FSD.md`](FSD.md) §4.1–4.8.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | Corporate inquiry form                         | `corporate-training/_sections/inquiry-form.tsx`                                                                            | CRM (lead capture)                                             | Same contract as above. Captures primary programme + "Also interested in" multi-select (`?program=<key>#inquiry` prefill). Full flow: [`FSD.md`](FSD.md) §4.9.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | Staff login                                    | `src/app/staff-login/page.tsx`                                                                                             | Auth (Google, staff-only)                                      | No provider, no session, no protected routes yet. Confirm with Adrian what staff actually need to do here before building real auth — the "why" isn't settled, only the login screen is. Its intended role (marking registrants PAID, staff roles) is specified in [`FSD.md`](FSD.md) §4.2, §4.12 and §8.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
@@ -143,7 +152,7 @@ Pulled from `MEETING-NOTES.md` (2026-09-20 meeting) — items not yet marked res
    course page (deliberate, so it doesn't cannibalize the seat). Confirm he's happy with the
    order.
 6. **Registration/payment policy details.** The 48-hour seat hold window, the transfer
-   window, and whether an official receipt is issued by default (`src/lib/workshop-faq.ts`,
+   window, and whether an official receipt is issued by default (the registration FAQ, removed 2026-10-01 with the workshop detail pages,
    `registered/_sections/payment.tsx`) are proposed policy, not confirmed. The payment
    _mechanism_ is decided: manual bank/GCash/Maya with staff verification (2026-09-30).
    There is also no refund policy anywhere yet. Tracked as FSD OPEN-5, OPEN-6, OPEN-11.
@@ -352,17 +361,16 @@ src/
     _sections/*.tsx             homepage sections
     _components/*.tsx           site-wide shared components (navbar, footer, GSAP primitives)
     _lib/                       gsap.ts, handoff.ts, hooks (see below)
-    about/ workshops/ workshops/[slug]/ workshops/[slug]/registered/
-    corporate-training/ corporate-training/inquiry-received/
+    about/ workshops/ workshops/[slug]/ (redirect only)
+    corporate-training/ interest/ privacy/
     staff-login/ email-templates/
       page.tsx                  route metadata + composition
       _sections/*.tsx            that route's sections
-      opengraph-image.tsx        (workshops/[slug] only — per-course social card)
   components/
     common/                    shared marketing/dashboard components (template — don't edit)
     ui/                        primitives, shadcn-style (template — don't edit)
   lib/                         mock content modules (see below)
-public/images/                 gallery/ (workshop photos), hero/, icons/, logos/, mascot/ — subfoldered, not flat
+public/images/                 gallery/ (one card photo per workshop), hero/, icons/, logos/, mascot/ — subfoldered, not flat
 ```
 
 ### Routes
@@ -379,17 +387,16 @@ route. Every route folder follows the same convention: `page.tsx` is imports + c
 - **Shared/repeated content** lives in `src/lib/*.ts` instead, since multiple pages or
   cards read the same data:
 
-  | File                                                      | Backs                                                                          |
-  | --------------------------------------------------------- | ------------------------------------------------------------------------------ |
-  | `workshops.ts`                                            | workshop cards + detail pages, tags                                            |
-  | `workshop-faq.ts`                                         | registration FAQ                                                               |
-  | `testimonials.ts`                                         | testimonial quotes across pages                                                |
-  | `timeline.ts`                                             | About page journey/milestones                                                  |
-  | `companies.ts`                                            | "companies served" logo marquee                                                |
-  | `specializations.ts`                                      | corporate programme cards                                                      |
-  | `certifications.ts`                                       | About page accrediting-body list                                               |
-  | `images.ts`, `utils.ts`                                   | helpers, not content                                                           |
-  | `og-jpeg.ts`, `og-photo.ts`, `og-fonts.ts`, `og-card.tsx` | share-image card pipeline — see [Share images](#share-images-open-graph-cards) |
+  | File                                                                                    | Backs                                                                          |
+  | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+  | `workshops.ts`                                                                          | workshop cards + detail pages, tags                                            |
+  | `testimonials.ts`                                                                       | testimonial quotes across pages                                                |
+  | `timeline.ts`                                                                           | About page journey/milestones                                                  |
+  | `companies.ts`                                                                          | "companies served" logo marquee                                                |
+  | `specializations.ts`                                                                    | corporate programme cards                                                      |
+  | `certifications.ts`                                                                     | About page accrediting-body list                                               |
+  | `images.ts`, `utils.ts`                                                                 | helpers, not content                                                           |
+  | `og-jpeg.ts`, `og-photo.ts`, `og-fonts.ts`, `og-card.tsx` (`OG_INK` + `ogScrim()` only) | share-image card pipeline — see [Share images](#share-images-open-graph-cards) |
 
   These `src/lib/*.ts` files are the seams Phase 2 replaces with real CMS data — see the
   [Phase 2 map](#phase-2-map) for the full approval/Phase-2 status of each.
@@ -440,7 +447,7 @@ check this specifically on any button variant you touch.
 - Mount-time reveals (e.g. hero copy) are CSS keyframes, not JS, so they
   paint immediately instead of sitting blank until a motion library hydrates.
 - Scroll- and interaction-driven motion is GSAP-first (see below); `framer-motion` is
-  used more broadly than just the hero — it backs `countdown.tsx`,
+  used more broadly than just the hero — it backs
   `spec-reveal-cards.tsx`, `text-sweep-reveal.tsx`, `timeline.tsx`,
   `workshops-calendar.tsx`, `quote-reveal.tsx`, `paths.tsx`, `photo-wall.tsx`,
   `site-navbar.tsx`, and `parallax-floating.tsx` — mostly simple `motion.div`
@@ -472,7 +479,7 @@ registration: `ad-ease` (the site's signature long, quiet editorial ease-out) an
 | `split-reveal.tsx`                               | heading reveal via `SplitText`, line/word split                    |
 | `spec-reveal-cards.tsx`, `text-sweep-reveal.tsx` | other scroll-reveal variants                                       |
 | `marquee.tsx`, `companies-marquee.tsx`           | logo/content marquees                                              |
-| `counter.tsx`, `countdown.tsx`                   | animated numbers                                                   |
+| `counter.tsx`                                    | animated numbers                                                   |
 | `timeline.tsx`                                   | About page journey                                                 |
 | `testimonial-columns.tsx`                        | testimonial layout/animation                                       |
 | `scroll-refresh.tsx`                             | see below                                                          |

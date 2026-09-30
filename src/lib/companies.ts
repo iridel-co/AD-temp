@@ -185,8 +185,3 @@ export const COMPANY_GROUPS: CompanyGroup[] = [
     ],
   },
 ]
-
-/** Flat list, handy for a single continuous marquee row. */
-export const ALL_COMPANIES: CompanyLogo[] = COMPANY_GROUPS.flatMap(
-  (g) => g.logos
-)
