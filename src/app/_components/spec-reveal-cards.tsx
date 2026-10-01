@@ -26,7 +26,8 @@ export type SpecCard = {
   imageAlt: string
   // Vertical focal point for the cropped photo, e.g. "50% 20%" to bias the
   // crop toward the top of the frame. Defaults to centered.
-  imagePosition?: string
+  imagePosition?: string /** Untitled "And more…" teaser: centred lock + Get notified, no title. */
+  comingSoon?: true
 }
 
 // Alternating horizontal offset so the stack reads as a staggered, hand-set
@@ -49,7 +50,7 @@ export function SpecRevealCards({ items }: { items: SpecCard[] }) {
           <GlassLock
             variant="card"
             href={interestHref("corporate")}
-            title={item.title}
+            title={item.comingSoon ? undefined : item.title}
             className="absolute inset-0 overflow-hidden rounded-[inherit]"
           >
             <Image

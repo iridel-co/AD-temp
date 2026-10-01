@@ -25,8 +25,8 @@ type GlassLockProps = {
   label?: string
   /**
    * card variant: "title on the glass". The veil is unchanged, but instead of
-   * the centred lock + CTA the card shows a small frosted "Coming soon" pill
-   * and this title, crisp, bottom-left. The link's accessible name becomes
+   * the centred lock + CTA the card shows a small frosted "Coming soon" pill + a red
+   * "Get notified" pill top-left and this title, crisp, bottom-left. The link's accessible name becomes
    * "<title> — coming soon, get notified" (`label` is ignored). Omitted →
    * the card renders exactly as before.
    */
@@ -67,6 +67,19 @@ function ComingSoonPill() {
   )
 }
 
+/** Titled-card CTA: the untitled cards' red brand "Get notified →", pill-sized. */
+function GetNotifiedPill() {
+  return (
+    <span className="bg-brand text-brand-foreground shadow-brand/30 group-hover/glass:bg-brand/90 inline-flex h-[1.875rem] items-center gap-1 rounded-full px-3.5 text-xs font-semibold shadow-lg transition-all duration-300 group-hover/glass:-translate-y-0.5 group-hover/glass:shadow-xl motion-reduce:transition-none motion-reduce:group-hover/glass:translate-y-0">
+      Get notified
+      <ArrowRight
+        className="size-3.5 transition-transform duration-300 group-hover/glass:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover/glass:translate-x-0"
+        aria-hidden="true"
+      />
+    </span>
+  )
+}
+
 /**
  * "Liquid glass" lock. The real UI stays rendered underneath, blurred with CSS
  * `filter` (not backdrop-filter, so it survives ancestor opacity/transform from
@@ -100,9 +113,15 @@ export function GlassLock({
         <Link
           href={href ?? interestHref(interest)}
           aria-label={`${title} — coming soon, get notified`}
-          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex flex-col items-start justify-end gap-3 rounded-[inherit] bg-black/40 bg-linear-to-t from-black/45 via-transparent to-transparent p-6 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset lg:p-8"
+          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex flex-col items-start justify-between gap-3 rounded-[inherit] bg-black/40 bg-linear-to-t from-black/45 via-transparent to-transparent p-6 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset lg:p-8"
         >
-          <ComingSoonPill />
+          <span
+            aria-hidden="true"
+            className="flex flex-wrap items-center gap-2"
+          >
+            <ComingSoonPill />
+            <GetNotifiedPill />
+          </span>
           <span
             aria-hidden="true"
             className={`font-serif leading-[1.08] tracking-[-0.02em] text-balance [overflow-wrap:anywhere] text-white [text-shadow:0_2px_16px_rgb(0_0_0/0.55),0_1px_3px_rgb(0_0_0/0.4)] ${

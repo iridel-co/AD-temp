@@ -28,6 +28,7 @@ const CARDS: ProgramCard[] = CORPORATE_PROGRAMMES.map((spec) => ({
   image: SPECIALIZATION_IMAGES[spec.key],
   imageAlt: SPECIALIZATION_IMAGE_ALTS[spec.key],
   imagePosition: SPECIALIZATION_IMAGE_POSITIONS[spec.key],
+  comingSoon: spec.comingSoon,
 }))
 
 export function CorporatePrograms() {

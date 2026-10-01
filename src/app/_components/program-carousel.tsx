@@ -32,7 +32,8 @@ export type ProgramCard = {
   usefulFor: string[]
   image: string
   imageAlt: string
-  imagePosition?: string // CSS object-position, default "50% 50%"
+  imagePosition?: string // CSS object-position, default "50% 50%"  /** Untitled "And more…" teaser: centred lock + Get notified, no title. */
+  comingSoon?: true
 }
 
 const RAIL =
@@ -131,7 +132,7 @@ export function ProgramCarousel({
       <GlassLock
         variant="card"
         href={interestHref("corporate")}
-        title={item.title}
+        title={item.comingSoon ? undefined : item.title}
         className="absolute inset-0 overflow-hidden rounded-[inherit]"
       >
         <Image
