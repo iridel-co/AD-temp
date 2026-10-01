@@ -47,3 +47,6 @@ CLAUDE.md
 
 # verification screenshots
 .verify/
+
+# playwright mcp scratch
+.playwright-mcp/
