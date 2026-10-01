@@ -288,7 +288,7 @@ export function EventCards({
         <GlassLock
           variant="card"
           href={interestHref("workshops")}
-          label={`${w.title}: coming soon, get notified`}
+          title={w.showTitle ? w.title : undefined}
           className="absolute inset-0 overflow-hidden rounded-[inherit]"
         >
           <Image

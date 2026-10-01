@@ -13,11 +13,10 @@ import {
 /**
  * Corporate Training — "Programs we run in-house": a horizontal,
  * constant-width carousel (see `program-carousel.tsx`), not the landing
- * page's reveal-card stack. Ten cards from `CORPORATE_PROGRAMMES` — Adrian's
- * six real programmes plus four 2026-09-24 placeholders, shown here (and on
- * the inquiry form) so the long list can be judged; never on the landing
- * page. Each card sits under a "Coming soon" glass veil and is one link to
- * the corporate interest form; no hover expand, no Inquire button. Added
+ * page's reveal-card stack. Cards from `CORPORATE_PROGRAMMES` — the teaser
+ * list of eight titles plus a locked "And more…" card (2026-10-01). Each
+ * card shows its title on a "Coming soon" glass veil and is one link to the
+ * corporate interest form; no hover expand, no Inquire button. Added
  * 2026-09-19; copy rewritten 2026-09-24 to say plainly these are in-house
  * corporate programmes.
  */

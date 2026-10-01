@@ -4,8 +4,9 @@ import { interestHref } from "@/lib/interest"
 import { cn } from "@/lib/utils"
 
 /**
- * The programmes (all ten on the landing page) as a stack of rounded, cropped
- * photo cards with the programme title and blurb laid over a scrim.
+ * The programmes (the teaser list on the landing page) as a stack of rounded, cropped
+ * photo cards with the programme title and blurb laid over a scrim (both blurred; the
+ * title is repeated crisp on the glass).
  *
  * Every card sits under a <GlassLock variant="card"> "Coming soon" veil, the
  * same as the workshop cards: the whole card is one link to the corporate
@@ -48,7 +49,7 @@ export function SpecRevealCards({ items }: { items: SpecCard[] }) {
           <GlassLock
             variant="card"
             href={interestHref("corporate")}
-            label={`${item.title}: coming soon, get notified`}
+            title={item.title}
             className="absolute inset-0 overflow-hidden rounded-[inherit]"
           >
             <Image

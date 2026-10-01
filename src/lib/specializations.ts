@@ -5,13 +5,12 @@
  * array. Longer `detail` for the About page's expanded version; `blurb` and
  * `usefulFor` feed the landing cards and the corporate carousel.
  *
- * `PLACEHOLDER_PROGRAMMES` — four demo-only entries (added 2026-09-24) so the
- * corporate carousel and inquiry form can be judged with a longer list. Not
- * confirmed with Adrian — each carries its own TODO.
- *
- * `CORPORATE_PROGRAMMES` — both lists combined (real six first), read by the
- * landing "In-house programs" cards (since pass 5, 2026-09-24), the
- * corporate page's programme carousel, and its inquiry form.
+ * `CORPORATE_PROGRAMMES` — the teaser build's in-house list (2026-10-01):
+ * eight programme titles shown on the glass, then an "And more…" card that
+ * is coming-soon only (`comingSoon`, never a form option). Read by the
+ * landing "In-house programs" cards, the corporate page's programme carousel
+ * and (minus the "And more" card) its inquiry form. Blurbs and `usefulFor`
+ * sit under the glass, so they stay short and representative.
  */
 import {
   Compass,
@@ -22,8 +21,7 @@ import {
   UserRoundCheck,
   TrendingUp,
   HeartHandshake,
-  RefreshCw,
-  Brain,
+  Ellipsis,
   type LucideIcon,
 } from "lucide-react"
 import { placeholderImg } from "@/lib/images"
@@ -37,11 +35,9 @@ export type Specialization = {
    *  programme is for. TODO: representative copy; Adrian to confirm. */
   usefulFor: string[]
   icon: LucideIcon
-  /** Demo-only programme, not confirmed with Adrian — shown wherever
-   *  `CORPORATE_PROGRAMMES` is read (landing cards, corporate carousel,
-   *  inquiry form) so the long list can be judged. Never in the About numbers
-   *  or the site CTA (those read `SPECIALIZATIONS`). */
-  placeholder?: true
+  /** Teaser-only "And more…" card: shown locked on the landing and the
+   *  carousel, never offered as an inquiry-form option. */
+  comingSoon?: true
 }
 
 // TODO: Adrian to confirm the usefulFor bullets (representative, 2026-09-19)
@@ -138,89 +134,70 @@ export const SPECIALIZATIONS: Specialization[] = [
   },
 ]
 
-/**
- * Four placeholder programmes (added 2026-09-24) so the corporate carousel and
- * the inquiry form can be seen with a long list. Plausible for Adrian's
- * practice (sales, service, change, EQ) but NOT confirmed — confirm or delete
- * each with Adrian before handoff.
- */
-const PLACEHOLDER_PROGRAMMES: Specialization[] = [
-  // TODO: placeholder programme — confirm with Adrian
+const byKey = (key: string): Specialization =>
+  SPECIALIZATIONS.find((s) => s.key === key)!
+
+/** Teaser list, in the client's order. Image keys map in the records below. */
+export const CORPORATE_PROGRAMMES: Specialization[] = [
+  { ...byKey("leadership"), title: "Leadership Development" },
   {
-    key: "sales-leadership",
-    title: "Sales Leadership & Coaching",
+    key: "salesmanship",
+    title: "Exceptional Salesmanship",
     blurb:
-      "Helping sales managers coach, not just chase — so the whole floor lifts its numbers, not only the stars.",
+      "Attracting high-value clients and growing revenue, without pressure tactics.",
     detail:
-      "For sales managers who got the job by selling: how to coach reps in the field and in the huddle, run a pipeline review that changes behaviour, and build a floor where the middle of the team moves, not just the stars.",
+      "For sales teams and the managers who coach them: how to open, qualify and close with integrity, and build a floor where the whole team lifts its numbers.",
     usefulFor: [
       "Sales managers promoted from top-producer roles",
-      "Teams where a few stars carry the target and the rest trail behind",
-      "Organisations launching a new product, territory or sales process",
-      "Leaders who want weekly coaching huddles that actually move numbers",
+      "Teams where a few stars carry the target",
+      "Organisations launching a new product or sales process",
     ],
     icon: TrendingUp,
-    placeholder: true,
   },
-  // TODO: placeholder programme — confirm with Adrian
   {
-    key: "customer-service",
-    title: "Customer Service Excellence",
+    key: "service-excellence",
+    title: "Service Excellence",
     blurb:
-      "Service customers talk about — the standards, language and recovery habits every frontliner can use.",
+      "Service customers talk about: the standards, language and recovery habits every frontliner can use.",
     detail:
-      "Service standards, the language that de-escalates, and a recovery routine for when things go wrong — practised on real scenarios from your own counters, calls and chats.",
+      "Service standards, the language that de-escalates, and a recovery routine for when things go wrong, practised on scenarios from your own counters, calls and chats.",
     usefulFor: [
-      "Frontline, contact-centre and branch teams who face customers every day",
-      "Hospitality, retail, banking and healthcare service teams",
-      "Companies whose satisfaction scores or reviews have started to slip",
-      "Supervisors who handle escalations and need a recovery playbook",
+      "Frontline, contact-centre and branch teams",
+      "Companies whose satisfaction scores have slipped",
+      "Supervisors who handle escalations",
     ],
     icon: HeartHandshake,
-    placeholder: true,
   },
-  // TODO: placeholder programme — confirm with Adrian
   {
-    key: "change-resilience",
-    title: "Change Management & Resilience",
-    blurb:
-      "Keeping teams steady and productive through restructures, new systems and hard years, without burning out.",
-    detail:
-      "How people actually experience change, how managers lead them through it, and the personal habits that keep a team steady and productive while the ground moves.",
-    usefulFor: [
-      "Organisations going through a restructure, merger or leadership change",
-      "Teams rolling out a new system, process or operating model",
-      "Managers leading people through change they didn't choose",
-      "Teams showing fatigue, cynicism or burnout after a hard year",
-    ],
-    icon: RefreshCw,
-    placeholder: true,
+    ...byKey("personal-branding"),
+    key: "corporate-image",
+    title: "Corporate Image",
   },
-  // TODO: placeholder programme — confirm with Adrian
+  { ...byKey("personal-branding"), title: "Personal Branding" },
   {
-    key: "emotional-intelligence",
-    title: "Emotional Intelligence at Work",
-    blurb:
-      "Self-awareness, composure and empathy as working skills — better calls under pressure, fewer blow-ups.",
-    detail:
-      "Recognising what you and others are feeling, staying composed under pressure, and turning that awareness into better conversations, decisions and working relationships.",
-    usefulFor: [
-      "Managers promoted for technical skill who now need people skills",
-      "Teams where friction, silence or blow-ups get in the way of the work",
-      "High-pressure roles in sales, operations and service where composure matters",
-      "Leaders building a culture of honest feedback and psychological safety",
-    ],
-    icon: Brain,
-    placeholder: true,
+    ...byKey("train-the-trainer"),
+    key: "train-the-trainers",
+    title: "Train the Trainers",
   },
-]
-
-/** Everything Adrian offers in-house — the six real programmes first, then
- *  the placeholders. Read by the landing cards, the corporate carousel and
- *  the inquiry form. */
-export const CORPORATE_PROGRAMMES: Specialization[] = [
-  ...SPECIALIZATIONS,
-  ...PLACEHOLDER_PROGRAMMES,
+  {
+    ...byKey("train-the-trainer"),
+    key: "coaching-the-coaches",
+    title: "Coaching the Coaches",
+  },
+  {
+    ...byKey("culture"),
+    key: "high-performing-teams",
+    title: "High-Performing Teams",
+  },
+  {
+    key: "and-more",
+    title: "And more\u2026",
+    blurb: "More in-house programmes are on the way.",
+    detail: "More in-house programmes are on the way.",
+    usefulFor: [],
+    icon: Ellipsis,
+    comingSoon: true,
+  },
 ]
 
 /* TODO: replace the placeholderImg() Unsplash stand-ins with real program
@@ -239,15 +216,20 @@ export const SPECIALIZATION_IMAGES: Record<string, string> = {
     1200,
     "top"
   ),
-  // Placeholder programmes (2026-09-24) — Unsplash stand-ins, same TODO as above.
-  "sales-leadership": placeholderImg("1600880292203-757bb62b4baf", 1400, 800),
-  "customer-service": placeholderImg("1556745757-8d76bdb6984b", 1400, 800),
-  "change-resilience": placeholderImg("1542744173-8e7e53415bb0", 1400, 800),
-  "emotional-intelligence": placeholderImg(
-    "1515187029135-18ee286d815b",
-    1400,
-    800
-  ),
+  // Teaser programmes reuse the images above (duplicates are fine).
+  salesmanship: placeholderImg("1600880292203-757bb62b4baf", 1400, 800),
+  "service-excellence": placeholderImg("1556745757-8d76bdb6984b", 1400, 800),
+  "and-more": placeholderImg("1475721027785-f74eccf877e2", 1400, 800),
+}
+// Programme keys that share a photo with one of the six originals.
+const SHARED_IMAGE: Record<string, string> = {
+  "corporate-image": "personal-branding",
+  "train-the-trainers": "train-the-trainer",
+  "coaching-the-coaches": "train-the-trainer",
+  "high-performing-teams": "culture",
+}
+for (const [key, from] of Object.entries(SHARED_IMAGE)) {
+  SPECIALIZATION_IMAGES[key] = SPECIALIZATION_IMAGES[from]
 }
 
 // Last card's portrait shot is taller than the card at every breakpoint, so
@@ -255,6 +237,7 @@ export const SPECIALIZATION_IMAGES: Record<string, string> = {
 // ~42% reads the same framing collapsed and expanded.
 export const SPECIALIZATION_IMAGE_POSITIONS: Record<string, string> = {
   "personal-branding": "50% 42%",
+  "corporate-image": "50% 42%",
 }
 
 export const SPECIALIZATION_IMAGE_ALTS: Record<string, string> = {
@@ -265,10 +248,11 @@ export const SPECIALIZATION_IMAGE_ALTS: Record<string, string> = {
   "train-the-trainer": "An internal facilitator running a training session",
   "personal-branding":
     "A professional in a considered, confident portrait setting",
-  "sales-leadership":
+  salesmanship:
     "A sales manager and a rep celebrating a closed deal at the office",
-  "customer-service": "A customer paying at a service counter",
-  "change-resilience": "A leader walking a team through a plan in a boardroom",
-  "emotional-intelligence":
-    "Colleagues listening closely to one another in a group discussion",
+  "service-excellence": "A customer paying at a service counter",
+  "and-more": "Adrian Ding on stage delivering a keynote to a full room",
+}
+for (const [key, from] of Object.entries(SHARED_IMAGE)) {
+  SPECIALIZATION_IMAGE_ALTS[key] = SPECIALIZATION_IMAGE_ALTS[from]
 }

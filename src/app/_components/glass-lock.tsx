@@ -23,6 +23,14 @@ type GlassLockProps = {
   href?: string
   /** card variant: accessible name of the single link. */
   label?: string
+  /**
+   * card variant: "title on the glass". The veil is unchanged, but instead of
+   * the centred lock + CTA the card shows a small frosted "Coming soon" pill
+   * and this title, crisp, bottom-left. The link's accessible name becomes
+   * "<title> — coming soon, get notified" (`label` is ignored). Omitted →
+   * the card renders exactly as before.
+   */
+  title?: string
   /** Heavier blur, for content that must not be readable at all (dates). */
   strong?: boolean
   /** On the outer wrapper (width, radius, margins). */
@@ -47,6 +55,18 @@ function LockBadge({ hoverGroup = false }: { hoverGroup?: boolean }) {
   )
 }
 
+/** Titled-card pill: the LockBadge tokens at pill size, lock + tracked label. */
+function ComingSoonPill() {
+  return (
+    <span className="relative inline-flex items-center gap-1.5 rounded-full border border-white/40 bg-white/15 py-1.5 pr-3 pl-2.5 text-white shadow-[inset_0_1px_0_0_rgb(255_255_255/0.5),0_12px_30px_-12px_rgb(0_0_0/0.6)] backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 group-hover/glass:bg-white/30 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-linear-to-br before:from-white/40 before:via-white/5 before:to-transparent motion-reduce:transition-none">
+      <Lock className="relative size-3.5" aria-hidden="true" />
+      <span className="relative text-[0.6875rem] font-semibold tracking-[0.18em] uppercase">
+        Coming soon
+      </span>
+    </span>
+  )
+}
+
 /**
  * "Liquid glass" lock. The real UI stays rendered underneath, blurred with CSS
  * `filter` (not backdrop-filter, so it survives ancestor opacity/transform from
@@ -63,9 +83,43 @@ export function GlassLock({
   variant = "panel",
   href,
   label = "Coming soon, get notified",
+  title,
   strong = false,
   className,
 }: GlassLockProps) {
+  if (variant === "card" && title) {
+    return (
+      <div className={`isolate ${className ?? ""}`}>
+        <div
+          inert
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 scale-105 blur-[10px] saturate-[.85] select-none"
+        >
+          {children}
+        </div>
+        <Link
+          href={href ?? interestHref(interest)}
+          aria-label={`${title} — coming soon, get notified`}
+          className="group/glass focus-visible:ring-brand absolute inset-0 z-10 flex flex-col items-start justify-end gap-3 rounded-[inherit] bg-black/40 bg-linear-to-t from-black/45 via-transparent to-transparent p-6 shadow-[inset_0_0_0_1px_rgb(255_255_255/0.25),inset_0_1px_0_0_rgb(255_255_255/0.5)] backdrop-blur-sm backdrop-saturate-150 outline-none focus-visible:ring-4 focus-visible:ring-inset lg:p-8"
+        >
+          <ComingSoonPill />
+          <span
+            aria-hidden="true"
+            className={`font-serif leading-[1.08] tracking-[-0.02em] text-balance [overflow-wrap:anywhere] text-white [text-shadow:0_2px_16px_rgb(0_0_0/0.55),0_1px_3px_rgb(0_0_0/0.4)] ${
+              // Long titles (the Train the Trainers certification) step down
+              // a size so they stay a readable block, not five or six lines.
+              title.length > 40
+                ? "text-[1.375rem] lg:text-[1.625rem]"
+                : "text-[1.75rem] lg:text-[2.125rem]"
+            }`}
+          >
+            {title}
+          </span>
+        </Link>
+      </div>
+    )
+  }
+
   if (variant === "card") {
     return (
       <div className={`isolate ${className ?? ""}`}>

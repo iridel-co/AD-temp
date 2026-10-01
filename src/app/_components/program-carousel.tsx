@@ -10,8 +10,7 @@ import { interestHref } from "@/lib/interest"
 
 /**
  * Corporate Training page only — "Programs we run in-house". A horizontal
- * rail of ten programme cards (Adrian's six plus four 2026-09-24
- * placeholders, from `CORPORATE_PROGRAMMES`).
+ * rail of programme cards from `CORPORATE_PROGRAMMES`.
  *
  * Every card sits under a <GlassLock variant="card"> "Coming soon" veil, the
  * same as the workshop cards: the whole card is one link to the corporate
@@ -132,7 +131,7 @@ export function ProgramCarousel({
       <GlassLock
         variant="card"
         href={interestHref("corporate")}
-        label={`${item.title}: coming soon, get notified`}
+        title={item.title}
         className="absolute inset-0 overflow-hidden rounded-[inherit]"
       >
         <Image

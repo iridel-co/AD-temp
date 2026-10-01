@@ -35,10 +35,9 @@ import { cn } from "@/lib/utils"
  * hidden, inside a fieldset — changed from plain checkboxes 2026-09-24), so
  * one inquiry can cover more than one programme.
  *
- * Programme list (2026-09-24): reads `CORPORATE_PROGRAMMES` — Adrian's six
- * real programmes plus four demo-only placeholders — so the corporate page's
- * select and tiles show all ten. The landing page still reads the real six
- * only.
+ * Programme list (2026-09-24): reads `CORPORATE_PROGRAMMES` minus the locked
+ * "And more…" teaser card (`comingSoon`), so the select and tiles list the
+ * eight real programme titles.
  *
  * Deep-link landing (2026-09-24): a cold load of
  * `/corporate-training?program=<key>#inquiry` prefills correctly above but
@@ -52,13 +51,13 @@ import { cn } from "@/lib/utils"
  * the visitor hasn't already started scrolling by hand.
  */
 
-const SPEC_TITLES = CORPORATE_PROGRAMMES.map((s) => s.title) as [
-  string,
-  ...string[],
-]
+// The locked "And more…" teaser card is not something to inquire about.
+const FORM_PROGRAMMES = CORPORATE_PROGRAMMES.filter((s) => !s.comingSoon)
+
+const SPEC_TITLES = FORM_PROGRAMMES.map((s) => s.title) as [string, ...string[]]
 
 const PROGRAMS = [
-  ...CORPORATE_PROGRAMMES.map((s) => s.title),
+  ...FORM_PROGRAMMES.map((s) => s.title),
   "Not sure yet — help us scope it",
 ] as const
 
@@ -163,7 +162,7 @@ export function CorporateInquiryForm() {
    *  select. Unknown keys are ignored silently — a stale or hand-edited URL
    *  must not error, it just leaves the form as-is. */
   const applyProgram = (key: string, focus: boolean) => {
-    const spec = CORPORATE_PROGRAMMES.find((s) => s.key === key)
+    const spec = FORM_PROGRAMMES.find((s) => s.key === key)
     if (!spec) return
     setValue("program", spec.title as FormValues["program"], {
       shouldValidate: false,
@@ -299,14 +298,14 @@ export function CorporateInquiryForm() {
       phone: "0917 555 0132",
       company: "Acme Manufacturing",
       role: "Head of Learning & Development",
-      program: CORPORATE_PROGRAMMES[0].title as FormValues["program"],
+      program: FORM_PROGRAMMES[0].title as FormValues["program"],
       attendees: "16 – 30",
       targetDate: composeDateRange(from, to),
       venue: "Our head office in Cebu City",
       context:
         "New supervisors promoted from the floor this year — we need them leading, not just scheduling.",
       consent: true,
-      alsoInterested: [CORPORATE_PROGRAMMES[3].title],
+      alsoInterested: [FORM_PROGRAMMES[3].title],
     })
   }
 
@@ -472,44 +471,42 @@ export function CorporateInquiryForm() {
                 Tick any others you&rsquo;d like the proposal to cover.
               </p>
               <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {CORPORATE_PROGRAMMES.filter((p) => p.title !== primary).map(
-                  (p) => {
-                    const on = also.includes(p.title)
-                    const Icon = p.icon
-                    return (
-                      <label
-                        key={p.key}
-                        className={cn(TILE_BASE, on ? TILE_ON : TILE_OFF)}
+                {FORM_PROGRAMMES.filter((p) => p.title !== primary).map((p) => {
+                  const on = also.includes(p.title)
+                  const Icon = p.icon
+                  return (
+                    <label
+                      key={p.key}
+                      className={cn(TILE_BASE, on ? TILE_ON : TILE_OFF)}
+                    >
+                      <input
+                        type="checkbox"
+                        className="sr-only"
+                        checked={on}
+                        onChange={() => toggleAlso(p.title)}
+                        aria-describedby="also-interested-help"
+                      />
+                      <span
+                        className={cn(
+                          TILE_ICON_BASE,
+                          on ? TILE_ICON_ON : TILE_ICON_OFF
+                        )}
                       >
-                        <input
-                          type="checkbox"
-                          className="sr-only"
-                          checked={on}
-                          onChange={() => toggleAlso(p.title)}
-                          aria-describedby="also-interested-help"
-                        />
-                        <span
-                          className={cn(
-                            TILE_ICON_BASE,
-                            on ? TILE_ICON_ON : TILE_ICON_OFF
-                          )}
-                        >
-                          <Icon className="size-[1.125rem]" aria-hidden />
-                        </span>
-                        <span className="flex-1 leading-snug">{p.title}</span>
-                        <span
-                          aria-hidden
-                          className={cn(
-                            TILE_CHECK_BASE,
-                            on ? TILE_CHECK_ON : TILE_CHECK_OFF
-                          )}
-                        >
-                          <Check className="size-3.5" strokeWidth={3} />
-                        </span>
-                      </label>
-                    )
-                  }
-                )}
+                        <Icon className="size-[1.125rem]" aria-hidden />
+                      </span>
+                      <span className="flex-1 leading-snug">{p.title}</span>
+                      <span
+                        aria-hidden
+                        className={cn(
+                          TILE_CHECK_BASE,
+                          on ? TILE_CHECK_ON : TILE_CHECK_OFF
+                        )}
+                      >
+                        <Check className="size-3.5" strokeWidth={3} />
+                      </span>
+                    </label>
+                  )
+                })}
               </div>
             </fieldset>
             <Field

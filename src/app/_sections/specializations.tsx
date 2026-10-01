@@ -14,17 +14,15 @@ import {
 /**
  * Landing — Coach Adrian's in-house corporate training programmes, framed
  * explicitly as run for companies and their teams (2026-09-24 copy pass).
- * Each card shows its title and blurb under a "Coming soon" glass veil and is
+ * Each card shows its title on a "Coming soon" glass veil and is
  * one link to the corporate interest form (see `spec-reveal-cards.tsx`).
  * Sits on the muted ground between the credibility block and the
  * workshop/corporate fork.
  *
- * Reads `CORPORATE_PROGRAMMES` — all ten: Adrian's real six, then the four
- * placeholder programmes (pass 5, 2026-09-24, Chan's call; the placeholders
- * are still TODO-confirm-with-Adrian in `lib/specializations.ts`). The About
+ * Reads `CORPORATE_PROGRAMMES` — the teaser list: eight programme titles
+ * shown on the glass, then a locked "And more…" card (2026-10-01). The About
  * "Core program tracks" figure and the site CTA marquee deliberately stay on
- * `SPECIALIZATIONS` (the real six). Ten rows needed no layout change: the
- * placeholder blurbs fit the same card heights.
+ * `SPECIALIZATIONS` (the real six).
  */
 
 const CARDS: SpecCard[] = CORPORATE_PROGRAMMES.map((spec) => ({
@@ -56,7 +54,7 @@ export function LandingSpecializations() {
             </p>
           </div>
 
-          {/* Right — the ten reveal cards. A horizontal snap rail below `lg`
+          {/* Right — the reveal cards. A horizontal snap rail below `lg`
               (six stacked cards ran ~2 phone screens on their own), the
               static vertical stack from `lg` up. `-mx-6`/`px-6`
               lets the rail bleed to the viewport edges while its first card

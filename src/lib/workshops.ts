@@ -6,8 +6,8 @@
  *
  * In the real build this is CMS-managed.
  *
- * The first three entries (salesmanship, leadership, train-the-trainers) are
- * the client's own courses and head the list; the rest are demo entries.
+ * The first four entries (salesmanship, leadership 1 and 2, train-the-trainers)
+ * are the client's own courses and head the list; the rest are demo entries.
  *
  * Each workshop carries 1–3 `tags` from `WORKSHOP_TAGS` (added 2026-09-19 — the
  * client wanted it obvious at a glance which area a course serves).
@@ -46,12 +46,16 @@ export type Workshop = {
   status: "open" | "past"
   /** One-line hook for cards. */
   summary: string
+  /** Teaser build: the real workshops show their title on the glass; the
+   *  placeholders stay fully locked, no visible title. */
+  showTitle?: true
 }
 
 const WORKSHOPS: Workshop[] = [
   {
     slug: "exceptional-salesmanship",
     title: "Exceptional Salesmanship",
+    showTitle: true,
     // TODO: client sign-off on tags
     tags: ["Sales", "Customer Experience"],
     start: "2026-10-09T09:00:00+08:00",
@@ -64,9 +68,11 @@ const WORKSHOPS: Workshop[] = [
       "A one-day masterclass on attracting high-value clients, improving conversions and growing revenue — without pressure tactics.",
   },
   {
-    // Client's own course (supplied 2026-09-17).
-    slug: "exceptional-leadership",
-    title: "Exceptional Leadership",
+    // Client's own course (supplied 2026-09-17), split into parts 1 and 2 on
+    // 2026-10-01. Part 2 reuses part 1's card fields and a gallery photo.
+    slug: "exceptional-leadership-1",
+    title: "Exceptional Leadership 1",
+    showTitle: true,
     tags: ["Leadership", "Communication"],
     start: "2026-10-16T09:00:00+08:00",
     schedule: "Friday, October 16, 2026 · 9:00 AM – 5:00 PM",
@@ -78,11 +84,25 @@ const WORKSHOPS: Workshop[] = [
       "A concise, intensive day for the modern leader — grow from within, then lead a team that performs without you in the room.",
   },
   {
-    // Client's own course (supplied 2026-09-17). The title is shortened to fit
-    // a card; his full title ("… Certification Program for Exceptional
-    // Presentations") is kept in `summary`.
+    slug: "exceptional-leadership-2",
+    title: "Exceptional Leadership 2",
+    showTitle: true,
+    tags: ["Leadership", "Communication"],
+    start: "2026-10-30T09:00:00+08:00",
+    schedule: "Friday, October 30, 2026 · 9:00 AM – 5:00 PM",
+    venue: "SEDA Ayala Center Cebu, E-bloc",
+    city: "Cebu City",
+    image: "/images/gallery/sunlife/photo-5.jpg",
+    status: "open",
+    summary:
+      "The second leadership day — build on part one with the habits that keep a team performing without you in the room.",
+  },
+  {
+    // Client's own course (supplied 2026-09-17), full title since 2026-10-01.
     slug: "train-the-trainers-certification",
-    title: "Train the Trainers Certification Program",
+    title:
+      "Train the Trainers Certification Program for Exceptional Presentations",
+    showTitle: true,
     tags: ["Train-the-Trainer", "Communication"],
     start: "2026-11-11T09:00:00+08:00",
     schedule: "November 11–13, 2026 · 9:00 AM – 5:00 PM daily",
