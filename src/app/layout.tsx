@@ -33,10 +33,9 @@ const prata = localFont({
 
 // Where this build actually lives — every metadata URL (canonical, og:url, and
 // the generated og:image from `opengraph-image.tsx`) is resolved against it, so
-// it has to be the host serving THIS deployment. Hard-coding the client's domain
-// pointed og:image at adrianding.com/opengraph-image, which is their existing
-// live site and 404s — link previews would have silently shown nothing.
-// Vercel sets these itself; set NEXT_PUBLIC_SITE_URL to override at handoff.
+// it has to be the host serving THIS deployment. Vercel sets its own vars; any
+// other production host falls back to adrianding.com, where this build lives
+// during development (from 2026-10-01). NEXT_PUBLIC_SITE_URL overrides all.
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL_ENV === "production" &&
@@ -44,7 +43,9 @@ const SITE_URL =
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000")
+      : process.env.NODE_ENV === "production"
+        ? "https://adrianding.com"
+        : "http://localhost:3000")
 const TITLE = "Coach Adrian Ding — Leadership Development & Corporate Training"
 const DESCRIPTION =
   "20+ years, 20,000+ leaders trained across HSBC, Wipro, Petron and more. Corporate training and public workshops from the CEO of Maximum Impact PH."
