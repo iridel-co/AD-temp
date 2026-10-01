@@ -704,3 +704,5 @@ Live at https://adrianding.vercel.app/ (commit daa925c). QR code: `assets-src/qr
 - Every CTA is now a single "Get notified" button, each with its page's preset. The home page gets a closing SiteCta band. The `/interest` section is `min-h-[85svh]`, matching the thanks page.
 
 Still open with the client: the real privacy contact email (interim: chanabayabay@gmail.com), confirmation of the 2-year retention period, and an update to the privacy notice when the data is transferred (~Nov).
+
+- 2026-10-01: `consent_updates` dropped (column + RPC arg). Migration `20261001150000_interest_drop_consent_updates.sql` keeps the old 10-arg RPC working until the next deploy; then drop it (SQL at the bottom of that file). Privacy consent unchanged.

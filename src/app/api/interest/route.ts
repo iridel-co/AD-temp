@@ -60,7 +60,6 @@ export async function POST(req: Request) {
         p_interest: interest,
         p_source_path: sourcePath ?? null,
         p_consent_privacy: true,
-        p_consent_updates: false,
         p_consent_version: CONSENT_VERSION,
         p_user_agent: req.headers.get("user-agent")?.slice(0, 512) ?? null,
       }),
