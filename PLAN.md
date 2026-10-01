@@ -706,3 +706,5 @@ Live at https://adrianding.vercel.app/ (commit daa925c). QR codes: `assets-src/q
 Still open with the client: the real privacy contact email (interim: chanabayabay@gmail.com), confirmation of the 2-year retention period, and an update to the privacy notice when the data is transferred (~Nov).
 
 - 2026-10-01: `consent_updates` dropped (column + RPC arg). Migration `20261001150000_interest_drop_consent_updates.sql` keeps the old 10-arg RPC working until the next deploy; then drop it (SQL at the bottom of that file). Privacy consent unchanged.
+
+- 2026-10-01: Moved to **https://www.adrianding.com** (bare domain 308s to www) for the rest of development; adrianding.vercel.app stays up for the printed event QR. Any new host needs `SUPABASE_URL` + `SUPABASE_SECRET_KEY` set for Production and a redeploy — without them the form shows "We couldn't save that just now" (route 500 before reaching Supabase). Repo transferred to `iridel-co/AD-temp`.
