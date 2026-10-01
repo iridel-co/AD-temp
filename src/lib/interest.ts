@@ -26,8 +26,8 @@ export const CONSENT_VERSION = "2026-10-01b"
 /** Legal entity named in the consent text and on the privacy notice. */
 export const DATA_CONTROLLER = "Maximum Impact Training Development"
 
-// Interim privacy contact until the client confirms their own address.
-export const PRIVACY_CONTACT_EMAIL = "chanabayabay@gmail.com"
+/** Privacy contact named on the notice (the client's primary address). */
+export const PRIVACY_CONTACT_EMAIL = "coachadrianding@maximumimpact.online"
 
 /** sessionStorage key: the last page visited before the form (written by <PathTracker>). */
 export const LAST_PATH_KEY = "ad-last-path"
