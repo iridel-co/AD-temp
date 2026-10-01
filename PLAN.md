@@ -697,7 +697,7 @@ Deviations: **`src/app/staff-login/` and `src/app/email-templates/` NOT deleted*
 
 ## Rounds 3–4 — done (2026-10-01)
 
-Live at https://adrianding.vercel.app/ (commit daa925c). QR codes: `assets-src/qr/adrianding-com-qr.{png,svg}` (→ https://adrianding.com/, current) and `adrianding-vercel-app-qr.{png,svg}` (→ adrianding.vercel.app, event print run).
+Live at https://adrianding.vercel.app/ (commit daa925c). QR codes: `assets-src/qr/adrianding-com-qr.{png,svg}` (→ https://adrianding.com/, current).
 
 - Every submission is kept as its own row. Migration `20261001130000` was applied by Chan and verified. The merge query for handover is at the bottom of that file.
 - Fixed the bug where tapping a card opened `/interest` at the footer. The cause was `ScrollTrigger.refresh()` restoring a stale cached scroll value. Back/Forward now restore the scroll position (see `scroll-refresh.tsx`). Verified in emulation (iPhone 13, Pixel 7, desktop); not yet confirmed on a real iPhone.
